@@ -11,6 +11,7 @@
            Title="新警成长管理工具"
            Height="900" Width="1600"
            Background="White"
+           WindowStartupLocation="CenterScreen"
            Icon="/新警成长管理工具;component/Resources/icon.ico"
            BorderThickness="0">
     <hc:Window.DataContext>
