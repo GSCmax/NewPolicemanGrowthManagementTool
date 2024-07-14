@@ -20,12 +20,16 @@ namespace 新警成长管理工具.View
 
         private void ButtonShiftOut_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            bd.Visibility = System.Windows.Visibility.Visible;
+            ButtonShiftOut.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonShiftIn.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void ButtonShiftIn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            bd.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonShiftOut.Visibility = System.Windows.Visibility.Visible;
+            ButtonShiftIn.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }
