@@ -55,7 +55,14 @@
                                 <RowDefinition Height="500"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{Binding Sp.PolicemanName, StringFormat=警员：{0}}" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="24"/>
+                            <TextBlock Grid.Row="0" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="24">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="警员：{0}（成长值：{1}）">
+                                        <Binding Path="Sp.PolicemanName"/>
+                                        <Binding Path="Sp.PolicemanScore"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                             <hc:SimplePanel Grid.Row="1">
                                 <Canvas>
                                     <ItemsControl ItemsSource="{Binding Branches}">
