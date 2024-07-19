@@ -10,10 +10,10 @@ namespace 新警成长管理工具.VModel
     {
         #region 登录页
         [ObservableProperty]
-        private string? userName = null;
+        private string? userName = "Admin";
 
         [ObservableProperty]
-        private string? userPassword = null;
+        private string? userPassword = "123456";
 
         [ObservableProperty]
         private bool loginSuccess = false;
@@ -51,8 +51,7 @@ namespace 新警成长管理工具.VModel
         private SinglePoliceman? sp = null;
         partial void OnSpChanged(SinglePoliceman? value)
         {
-            Branches.Clear();
-            DrawTree(250, 450, -90, 100, Sp!.PolicemanScore, Sp!.PolicemanReward.Count);
+            UpdateTree();
         }
 
         [RelayCommand]
@@ -61,7 +60,7 @@ namespace 新警成长管理工具.VModel
             if (Sp != null)
             {
                 Branches.Clear();
-                DrawTree(250, 450, -90, 100, Sp!.PolicemanScore, Sp!.PolicemanReward.Count);
+                DrawTree(250, 450, -90, 100, Sp!.PolicemanScore*0.1, Sp!.PolicemanReward.Count);
             }
         }
 
