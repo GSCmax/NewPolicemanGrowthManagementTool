@@ -104,10 +104,10 @@ namespace 新警成长管理工具.Model
         {
             double a = 0;
             double b = 0;
-            foreach (string r in PolicemanReward)
-                a += GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(i => i.RewardName == r)!.RewardScore;
-            foreach (string p in PolicemanPunish)
-                b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(i => i.PunishName == p)!.PunishScore;
+            foreach (var r in PolicemanReward)
+                a += GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(i => i.RewardName == r.RewardOrPunishName)!.RewardScore;
+            foreach (var p in PolicemanPunish)
+                b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(i => i.PunishName == p.RewardOrPunishName)!.PunishScore;
             return a - b;
         }
 
@@ -115,12 +115,24 @@ namespace 新警成长管理工具.Model
         /// 奖励列表
         /// </summary>
         [JsonProperty]
-        public BindingList<string> PolicemanReward { get; set; } = [];
+        public BindingList<SingleRewardOrPunish4Policeman> PolicemanReward { get; set; } = [];
 
         /// <summary>
         /// 惩罚列表
         /// </summary>
         [JsonProperty]
-        public BindingList<string> PolicemanPunish { get; set; } = [];
+        public BindingList<SingleRewardOrPunish4Policeman> PolicemanPunish { get; set; } = [];
+    }
+
+    internal partial class SingleRewardOrPunish4Policeman : ObservableObject
+    {
+        [ObservableProperty]
+        private string rewardOrPunishName = "";
+
+        [ObservableProperty]
+        private DateTime addTime;
+
+        [ObservableProperty]
+        private string addAdmin = "";
     }
 }

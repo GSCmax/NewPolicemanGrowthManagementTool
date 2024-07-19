@@ -13,10 +13,16 @@ namespace 新警成长管理工具.Model
             {
                 foreach (var item1 in GlobalDataHelper.policemanLibrary!.PolicemanList)
                 {
-                    if (item1.PolicemanReward.Contains(oldValue))
+                    var temp = item1.PolicemanReward.FirstOrDefault(a => a.RewardOrPunishName == oldValue);
+                    if (temp != null)
                     {
-                        item1.PolicemanReward.Remove(oldValue);
-                        item1.PolicemanReward.Add(newValue);
+                        item1.PolicemanReward.Remove(temp);
+                        item1.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
+                        {
+                            RewardOrPunishName = newValue,
+                            AddAdmin = temp.AddAdmin,
+                            AddTime = temp.AddTime,
+                        });
                     }
                 }
             }

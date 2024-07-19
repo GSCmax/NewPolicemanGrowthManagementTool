@@ -5,6 +5,10 @@
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <!--#region Converters-->
+
+            <!--#endregion-->
+            
             <!--#region HandyControl-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>

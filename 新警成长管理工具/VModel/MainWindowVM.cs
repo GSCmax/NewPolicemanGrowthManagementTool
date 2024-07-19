@@ -10,10 +10,10 @@ namespace 新警成长管理工具.VModel
     {
         #region 登录页
         [ObservableProperty]
-        private string? userName = null;
+        private string userName = "";
 
         [ObservableProperty]
-        private string? userPassword = null;
+        private string userPassword = "";
 
         [ObservableProperty]
         private bool loginSuccess = false;
@@ -31,7 +31,11 @@ namespace 新警成长管理工具.VModel
         private void RDel(RewardItem r)
         {
             foreach (var t in GlobalDataHelper.policemanLibrary!.PolicemanList)
-                t.PolicemanReward.Remove(r.RewardName);
+            {
+                var temp = t.PolicemanReward.FirstOrDefault(a => a.RewardOrPunishName == r.RewardName);
+                if (temp != null)
+                    t.PolicemanReward.Remove(temp);
+            }
 
             GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.Remove(r);
         }
@@ -40,7 +44,11 @@ namespace 新警成长管理工具.VModel
         private void PDel(PunishItem p)
         {
             foreach (var t in GlobalDataHelper.policemanLibrary!.PolicemanList)
-                t.PolicemanPunish.Remove(p.PunishName);
+            {
+                var temp = t.PolicemanPunish.FirstOrDefault(a => a.RewardOrPunishName == p.PunishName);
+                if (temp != null)
+                    t.PolicemanPunish.Remove(temp);
+            }
 
             GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.Remove(p);
         }
@@ -60,7 +68,7 @@ namespace 新警成长管理工具.VModel
             if (Sp != null)
             {
                 Branches.Clear();
-                DrawTree(250, 450, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
+                DrawTree(200, 380, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
             }
         }
 
@@ -71,8 +79,18 @@ namespace 新警成长管理工具.VModel
         private void RAdd()
         {
             if (Sp != null && SelectR != null)
-                if (!((Sp).PolicemanReward.Contains(SelectR.RewardName)))
-                    Sp.PolicemanReward.Add(SelectR.RewardName);
+            {
+                var temp = Sp.PolicemanReward.FirstOrDefault(a => a.RewardOrPunishName == SelectR.RewardName);
+                if (temp == null)
+                {
+                    Sp.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
+                    {
+                        RewardOrPunishName = SelectR.RewardName,
+                        AddAdmin = UserName,
+                        AddTime = DateTime.Now,
+                    });
+                }
+            }
         }
 
         [ObservableProperty]
@@ -82,8 +100,18 @@ namespace 新警成长管理工具.VModel
         private void PAdd()
         {
             if (Sp != null && SelectP != null)
-                if (!((Sp).PolicemanPunish.Contains(SelectP.PunishName)))
-                    Sp.PolicemanPunish.Add(SelectP.PunishName);
+            {
+                var temp = Sp.PolicemanPunish.FirstOrDefault(a => a.RewardOrPunishName == SelectP.PunishName);
+                if (temp == null)
+                {
+                    Sp.PolicemanPunish.Add(new SingleRewardOrPunish4Policeman()
+                    {
+                        RewardOrPunishName = SelectP.PunishName,
+                        AddAdmin = UserName,
+                        AddTime = DateTime.Now,
+                    });
+                }
+            }
         }
 
         public BindingList<Branch> Branches { get; set; } = [];

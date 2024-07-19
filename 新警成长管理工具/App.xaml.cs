@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Data;
 using 新警成长管理工具.Tools;
 
 namespace 新警成长管理工具
