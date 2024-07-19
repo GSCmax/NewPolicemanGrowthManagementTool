@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Text.RegularExpressions;
 using 新警成长管理工具.Tools;
 
 namespace 新警成长管理工具.Model
