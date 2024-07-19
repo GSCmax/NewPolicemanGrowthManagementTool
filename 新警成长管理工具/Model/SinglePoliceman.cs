@@ -15,10 +15,16 @@ namespace 新警成长管理工具.Model
             PolicemanPunish.ListChanged += (s, e) => OnPropertyChanged(nameof(PolicemanScore));
         }
 
+        /// <summary>
+        /// 姓名
+        /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
         private string policemanName = "新警姓名";
 
+        /// <summary>
+        /// 身份证号
+        /// </summary>
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(PolicemanAge))]
         [NotifyPropertyChangedFor(nameof(PolicemanSex))]
@@ -30,10 +36,16 @@ namespace 新警成长管理工具.Model
             ValidateAllProperties();
         }
 
+        /// <summary>
+        /// 家庭住址
+        /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
         private string policemanAddr = "新警住址";
 
+        /// <summary>
+        /// 警号
+        /// </summary>
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(PolicemanAge))]
         [NotifyPropertyChangedFor(nameof(PolicemanSex))]
@@ -45,6 +57,24 @@ namespace 新警成长管理工具.Model
             ValidateAllProperties();
         }
 
+        /// <summary>
+        /// 入警时间
+        /// </summary>
+        [ObservableProperty]
+        [RegularExpression("^\\d{4}$")]
+        [property: JsonProperty]
+        private string policemanYear = "2000";
+
+        /// <summary>
+        /// 入警途径
+        /// </summary>
+        [ObservableProperty]
+        [property: JsonProperty]
+        private string policemanSource = "";
+
+        /// <summary>
+        /// 性别（自动）
+        /// </summary>
         public string PolicemanSex => UpdateSex();
         private string UpdateSex()
         {
@@ -54,6 +84,9 @@ namespace 新警成长管理工具.Model
                 return (int.Parse(PolicemanIDNo.Substring(16, 1)) % 2 == 1) ? "男" : "女";
         }
 
+        /// <summary>
+        /// 年龄（自动）
+        /// </summary>
         public int PolicemanAge => UpdateAge();
         private int UpdateAge()
         {
@@ -63,6 +96,9 @@ namespace 新警成长管理工具.Model
                 return DateTime.Now.Year - int.Parse(PolicemanIDNo.Substring(6, 4));
         }
 
+        /// <summary>
+        /// 成长值（自动）
+        /// </summary>
         public double PolicemanScore => UpdateScore();
         private double UpdateScore()
         {
@@ -75,9 +111,15 @@ namespace 新警成长管理工具.Model
             return a - b;
         }
 
+        /// <summary>
+        /// 奖励列表
+        /// </summary>
         [JsonProperty]
         public BindingList<string> PolicemanReward { get; set; } = [];
 
+        /// <summary>
+        /// 惩罚列表
+        /// </summary>
         [JsonProperty]
         public BindingList<string> PolicemanPunish { get; set; } = [];
     }
