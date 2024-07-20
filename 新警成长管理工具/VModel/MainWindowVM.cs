@@ -8,12 +8,9 @@ namespace 新警成长管理工具.VModel
 {
     internal partial class MainWindowVM : ObservableObject
     {
-        [RelayCommand]
-        private void GlobalRef()
-        {
-            GlobalDataHelper.Save();
-            GlobalDataHelper.Init();
-        }
+        #region 首页
+
+        #endregion
 
         #region 登录页
         [ObservableProperty]

@@ -94,11 +94,11 @@
                                 </Grid.Resources>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" MinHeight="50"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="5"/>
                                     <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" MinHeight="50"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="奖励" Margin="5,0,0,0"/>
@@ -162,7 +162,6 @@
                 <TextBlock Text="敬请期待" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="80"/>
             </TabItem>
         </TabControl>
-        <Button Style="{StaticResource ButtonPrimary}" Content="全局刷新" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}" Command="{Binding GlobalRefCommand}"/>
         <TextBlock Text="{Binding UserName, StringFormat=当前用户：{0}}" Margin="0,13,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <hc:Watermark Mark="{Binding UserName}" FontSize="50" MarkMargin="30,10" IsHitTestVisible="False" Opacity=".25" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <!--#endregion-->
