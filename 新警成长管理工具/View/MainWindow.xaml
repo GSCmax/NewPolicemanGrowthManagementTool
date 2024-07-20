@@ -14,7 +14,7 @@
            Background="White"
            WindowStartupLocation="CenterScreen"
            Icon="/新警成长管理工具;component/Resources/icon.ico"
-           BorderThickness="0">
+           BorderBrush="{DynamicResource PrimaryBrush}">
     <hc:Window.DataContext>
         <vm:MainWindowVM/>
     </hc:Window.DataContext>
