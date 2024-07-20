@@ -72,6 +72,10 @@ namespace 新警成长管理工具.Model
         [property: JsonProperty]
         private string policemanSource = "";
 
+        [ObservableProperty]
+        [property: JsonProperty]
+        private string policemanDegree = "";
+
         /// <summary>
         /// 性别（自动）
         /// </summary>
