@@ -24,10 +24,16 @@ namespace 新警成长管理工具.Model
         private string password = "123456";
 
         /// <summary>
+        /// 中共党员奖励项ID
+        /// </summary>
+        [ObservableProperty]
+        private Guid communistRewardID = new Guid();
+
+        /// <summary>
         /// 默认入警时间
         /// </summary>
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-        public BindingList<string> PolicemanYear { get; set; } = ["2021", "2022", "2023", "2024", "2025"];
+        public BindingList<string> PolicemanYear { get; set; } = ["2023", "2024"];
 
         /// <summary>
         /// 默认入警途径

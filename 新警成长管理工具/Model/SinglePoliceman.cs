@@ -12,6 +12,7 @@ namespace 新警成长管理工具.Model
         public SinglePoliceman()
         {
             PolicemanReward.ListChanged += (s, e) => OnPropertyChanged(nameof(PolicemanScore));
+            PolicemanReward.ListChanged += (s, e) => OnPropertyChanged(nameof(IfCommunist));
             PolicemanPunish.ListChanged += (s, e) => OnPropertyChanged(nameof(PolicemanScore));
         }
 
@@ -113,6 +114,19 @@ namespace 新警成长管理工具.Model
             foreach (var p in PolicemanPunish)
                 b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == p.RewardOrPunishID)!.PunishScore;
             return a - b;
+        }
+
+        /// <summary>
+        /// 中共党员（自动）
+        /// </summary>
+        public string IfCommunist => UpdateCommunist();
+        private string UpdateCommunist()
+        {
+            var temp = PolicemanReward.FirstOrDefault(a => a.RewardOrPunishID == GlobalDataHelper.appConfig!.CommunistRewardID);
+            if (temp != null)
+                return "是";
+            else
+                return "否";
         }
 
         /// <summary>

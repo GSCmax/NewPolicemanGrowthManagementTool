@@ -1,23 +1,50 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using 新警成长管理工具.Model;
 using 新警成长管理工具.Tools;
 
 namespace 新警成长管理工具.VModel
 {
-    internal partial class MainWindowVM : ObservableObject
+    internal partial class MainWindowVM : ObservableValidator
     {
         #region 首页
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Line1))]
+        [NotifyPropertyChangedFor(nameof(Line2))]
+        [NotifyPropertyChangedFor(nameof(Line3))]
+        [NotifyPropertyChangedFor(nameof(Line4))]
+        [NotifyPropertyChangedFor(nameof(Line5))]
+        private string? selectedYear = "";
 
+        public string? Line1 => $"共有新警{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Count()}人，其中男{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanSex == "男").Count()}人，女{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanSex == "女").Count()}人；";
+        public string? Line2 => $"最大年龄{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Max(b => b.PolicemanAge)}，最小年龄{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Min(b => b.PolicemanAge)}，平均年龄{Math.Round(GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Average(b => b.PolicemanAge))}；";
+        public string? Line3 => $"中共党员{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.IfCommunist == "是").Count()}人，研究生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "研究生").Count()}人，本科生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "本科生").Count()}人；";
+        public string? Line4 => $"积分排名前三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(2).PolicemanName}；";
+        public string? Line5 => $"　　　　末三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(2).PolicemanName}。";
+
+        [ObservableProperty]
+        [RegularExpression("^\\d{4}$")]
+        private string? needAddYear;
+
+        [RelayCommand]
+        private void AddYear()
+        {
+            ValidateAllProperties();
+            if (!HasErrors)
+                if (NeedAddYear != null)
+                    if (!GlobalDataHelper.appConfig!.PolicemanYear.Contains(NeedAddYear))
+                        GlobalDataHelper.appConfig!.PolicemanYear.Add(NeedAddYear);
+        }
         #endregion
 
         #region 登录页
         [ObservableProperty]
-        private string userName = "Admin";
+        private string? userName = "";
 
         [ObservableProperty]
-        private string userPassword = "123456";
+        private string? userPassword = "";
 
         [ObservableProperty]
         private bool loginSuccess = false;
@@ -90,7 +117,7 @@ namespace 新警成长管理工具.VModel
                     Sp.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
                     {
                         RewardOrPunishID = SelectR.RewardID,
-                        AddAdmin = UserName,
+                        AddAdmin = UserName!,
                         AddTime = DateTime.Now,
                     });
                 }
@@ -111,7 +138,7 @@ namespace 新警成长管理工具.VModel
                     Sp.PolicemanPunish.Add(new SingleRewardOrPunish4Policeman()
                     {
                         RewardOrPunishID = SelectP.PunishID,
-                        AddAdmin = UserName,
+                        AddAdmin = UserName!,
                         AddTime = DateTime.Now,
                     });
                 }
