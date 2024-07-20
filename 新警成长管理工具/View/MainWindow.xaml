@@ -64,7 +64,7 @@
                             <DataGridTextColumn Header="年龄" Width="60" Binding="{Binding PolicemanAge}" IsReadOnly="True"/>
                             <DataGridComboBoxColumn Header="学历" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanDegree}" SelectedItemBinding="{Binding PolicemanDegree}"/>
                             <DataGridTextColumn Header="警号" Width="90" Binding="{Binding PolicemanNo}"/>
-                            <DataGridTextColumn Header="中共党员" Width="90" Binding="{Binding IfCommunist}"/>
+                            <DataGridTextColumn Header="中共党员" Width="90" Binding="{Binding IfCommunist}" IsReadOnly="True"/>
                             <DataGridComboBoxColumn Header="入警时间" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}" SelectedItemBinding="{Binding PolicemanYear}"/>
                             <DataGridComboBoxColumn Header="入警途径" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanSource}" SelectedItemBinding="{Binding PolicemanSource}"/>
                             <DataGridTextColumn Header="身份证号" Width="180" Binding="{Binding PolicemanIDNo}"/>
