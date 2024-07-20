@@ -8,12 +8,19 @@ namespace 新警成长管理工具.VModel
 {
     internal partial class MainWindowVM : ObservableObject
     {
+        [RelayCommand]
+        private void GlobalRef()
+        {
+            GlobalDataHelper.Save();
+            GlobalDataHelper.Init();
+        }
+
         #region 登录页
         [ObservableProperty]
-        private string userName = "";
+        private string userName = "Admin";
 
         [ObservableProperty]
-        private string userPassword = "";
+        private string userPassword = "123456";
 
         [ObservableProperty]
         private bool loginSuccess = false;
@@ -30,11 +37,11 @@ namespace 新警成长管理工具.VModel
         [RelayCommand]
         private void RDel(RewardItem r)
         {
-            foreach (var t in GlobalDataHelper.policemanLibrary!.PolicemanList)
+            foreach (var pm in GlobalDataHelper.policemanLibrary!.PolicemanList)
             {
-                var temp = t.PolicemanReward.FirstOrDefault(a => a.RewardOrPunishName == r.RewardName);
+                var temp = pm.PolicemanReward.FirstOrDefault(t => t.RewardOrPunishID == r.RewardID);
                 if (temp != null)
-                    t.PolicemanReward.Remove(temp);
+                    pm.PolicemanReward.Remove(temp);
             }
 
             GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.Remove(r);
@@ -43,11 +50,11 @@ namespace 新警成长管理工具.VModel
         [RelayCommand]
         private void PDel(PunishItem p)
         {
-            foreach (var t in GlobalDataHelper.policemanLibrary!.PolicemanList)
+            foreach (var pm in GlobalDataHelper.policemanLibrary!.PolicemanList)
             {
-                var temp = t.PolicemanPunish.FirstOrDefault(a => a.RewardOrPunishName == p.PunishName);
+                var temp = pm.PolicemanPunish.FirstOrDefault(t => t.RewardOrPunishID == p.PunishID);
                 if (temp != null)
-                    t.PolicemanPunish.Remove(temp);
+                    pm.PolicemanPunish.Remove(temp);
             }
 
             GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.Remove(p);
@@ -80,12 +87,12 @@ namespace 新警成长管理工具.VModel
         {
             if (Sp != null && SelectR != null)
             {
-                var temp = Sp.PolicemanReward.FirstOrDefault(a => a.RewardOrPunishName == SelectR.RewardName);
+                var temp = Sp.PolicemanReward.FirstOrDefault(t => t.RewardOrPunishID == SelectR.RewardID);
                 if (temp == null)
                 {
                     Sp.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
                     {
-                        RewardOrPunishName = SelectR.RewardName,
+                        RewardOrPunishID = SelectR.RewardID,
                         AddAdmin = UserName,
                         AddTime = DateTime.Now,
                     });
@@ -101,12 +108,12 @@ namespace 新警成长管理工具.VModel
         {
             if (Sp != null && SelectP != null)
             {
-                var temp = Sp.PolicemanPunish.FirstOrDefault(a => a.RewardOrPunishName == SelectP.PunishName);
+                var temp = Sp.PolicemanPunish.FirstOrDefault(t => t.RewardOrPunishID == SelectP.PunishID);
                 if (temp == null)
                 {
                     Sp.PolicemanPunish.Add(new SingleRewardOrPunish4Policeman()
                     {
-                        RewardOrPunishName = SelectP.PunishName,
+                        RewardOrPunishID = SelectP.PunishID,
                         AddAdmin = UserName,
                         AddTime = DateTime.Now,
                     });

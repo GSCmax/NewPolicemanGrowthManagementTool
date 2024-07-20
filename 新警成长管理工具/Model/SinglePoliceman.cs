@@ -105,9 +105,9 @@ namespace 新警成长管理工具.Model
             double a = 0;
             double b = 0;
             foreach (var r in PolicemanReward)
-                a += GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(i => i.RewardName == r.RewardOrPunishName)!.RewardScore;
+                a += GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == r.RewardOrPunishID)!.RewardScore;
             foreach (var p in PolicemanPunish)
-                b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(i => i.PunishName == p.RewardOrPunishName)!.PunishScore;
+                b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == p.RewardOrPunishID)!.PunishScore;
             return a - b;
         }
 
@@ -127,7 +127,7 @@ namespace 新警成长管理工具.Model
     internal partial class SingleRewardOrPunish4Policeman : ObservableObject
     {
         [ObservableProperty]
-        private string rewardOrPunishName = "";
+        private Guid rewardOrPunishID;
 
         [ObservableProperty]
         private DateTime addTime;

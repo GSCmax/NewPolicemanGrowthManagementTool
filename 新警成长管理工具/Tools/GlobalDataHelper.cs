@@ -42,19 +42,6 @@ namespace 新警成长管理工具.Tools
             else
                 appConfig = new AppConfig();
 
-            if (File.Exists(PolicemanLibrary.SavePath))
-                try
-                {
-                    var json = File.ReadAllText(PolicemanLibrary.SavePath);
-                    policemanLibrary = (string.IsNullOrEmpty(json) ? new PolicemanLibrary() : JsonConvert.DeserializeObject<PolicemanLibrary>(json)) ?? new PolicemanLibrary();
-                }
-                catch
-                {
-                    policemanLibrary = new PolicemanLibrary();
-                }
-            else
-                policemanLibrary = new PolicemanLibrary();
-
             if (File.Exists(RewardANDPunishLibrary.SavePath))
                 try
                 {
@@ -67,6 +54,19 @@ namespace 新警成长管理工具.Tools
                 }
             else
                 rewardANDPunishLibrary = new RewardANDPunishLibrary();
+
+            if (File.Exists(PolicemanLibrary.SavePath))
+                try
+                {
+                    var json = File.ReadAllText(PolicemanLibrary.SavePath);
+                    policemanLibrary = (string.IsNullOrEmpty(json) ? new PolicemanLibrary() : JsonConvert.DeserializeObject<PolicemanLibrary>(json)) ?? new PolicemanLibrary();
+                }
+                catch
+                {
+                    policemanLibrary = new PolicemanLibrary();
+                }
+            else
+                policemanLibrary = new PolicemanLibrary();
         }
 
         public static void Save()

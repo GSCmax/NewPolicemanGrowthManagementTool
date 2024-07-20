@@ -9,7 +9,8 @@
            xmlns:hc="https://handyorg.github.io/handycontrol"
            mc:Ignorable="d"
            Title="新警成长管理工具"
-           Height="900" Width="1600"
+           Height="900" Width="1500"
+           MinHeight="600" MinWidth="1000"
            Background="White"
            WindowStartupLocation="CenterScreen"
            Icon="/新警成长管理工具;component/Resources/icon.ico"
@@ -82,8 +83,12 @@
                             </hc:SimplePanel>
                             <Grid Grid.Row="2">
                                 <Grid.Resources>
-                                    <Style x:Key="TagCustomStyle" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
-                                        <Setter Property="Content" Value="{Binding}"/>
+                                    <Style x:Key="TagCustomStyle1" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
+                                        <Setter Property="Content" Value="{Binding Converter={StaticResource RID2NC}}"/>
+                                        <Setter Property="Margin" Value="5"/>
+                                    </Style>
+                                    <Style x:Key="TagCustomStyle2" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
+                                        <Setter Property="Content" Value="{Binding Converter={StaticResource PID2NC}}"/>
                                         <Setter Property="Margin" Value="5"/>
                                     </Style>
                                 </Grid.Resources>
@@ -97,7 +102,7 @@
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="奖励" Margin="5,0,0,0"/>
-                                <hc:TagContainer Grid.Row="1" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle}" ItemsSource="{Binding ElementName=pgd, Path=SelectedItem.PolicemanReward}" DisplayMemberPath="RewardOrPunishName"/>
+                                <hc:TagContainer Grid.Row="1" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle1}" ItemsSource="{Binding ElementName=pgd, Path=SelectedItem.PolicemanReward}"/>
                                 <DockPanel Grid.Row="2" LastChildFill="True" Margin="5,0,5,0">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding RAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}"
@@ -105,7 +110,7 @@
                                 </DockPanel>
                                 <GridSplitter Grid.Row="3" Margin="5,0" Foreground="{DynamicResource BorderBrush}" Height="2"/>
                                 <TextBlock Grid.Row="4" Text="惩罚" Margin="5,0,0,0"/>
-                                <hc:TagContainer Grid.Row="5" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle}" ItemsSource="{Binding ElementName=pgd, Path=SelectedItem.PolicemanPunish}" DisplayMemberPath="RewardOrPunishName"/>
+                                <hc:TagContainer Grid.Row="5" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle2}" ItemsSource="{Binding ElementName=pgd, Path=SelectedItem.PolicemanPunish}"/>
                                 <DockPanel Grid.Row="6" LastChildFill="True" Margin="5,0,5,5">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding PAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=PunishItems}"
@@ -157,6 +162,7 @@
                 <TextBlock Text="敬请期待" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="80"/>
             </TabItem>
         </TabControl>
+        <Button Style="{StaticResource ButtonPrimary}" Content="全局刷新" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}" Command="{Binding GlobalRefCommand}"/>
         <TextBlock Text="{Binding UserName, StringFormat=当前用户：{0}}" Margin="0,13,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <hc:Watermark Mark="{Binding UserName}" FontSize="50" MarkMargin="30,10" IsHitTestVisible="False" Opacity=".25" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <!--#endregion-->
