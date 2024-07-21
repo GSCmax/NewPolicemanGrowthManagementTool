@@ -21,8 +21,8 @@ namespace 新警成长管理工具.VModel
         public string? Line1 => $"共计新警{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Count()}人，其中男性{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanSex == "男").Count()}人，女性{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanSex == "女").Count()}人；";
         public string? Line2 => $"最大年龄{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Max(b => b.PolicemanAge)}岁，最小年龄{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Min(b => b.PolicemanAge)}岁，平均年龄{Math.Round(GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Average(b => b.PolicemanAge))}岁；";
         public string? Line3 => $"中共党员{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.IfCommunist == "是").Count()}人，研究生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "研究生").Count()}人，本科生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "本科生").Count()}人；";
-        public string? Line4 => $"积分排名前三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(a => a.PolicemanSource).ElementAt(2).PolicemanName}；";
-        public string? Line5 => $"　　　　末三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(a => a.PolicemanSource).ElementAt(2).PolicemanName}。";
+        public string? Line4 => $"积分排名前三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(2).PolicemanName}；";
+        public string? Line5 => $"　　　　末三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(2).PolicemanName}。";
 
         [ObservableProperty]
         [RegularExpression("^\\d{4}$")]
@@ -166,6 +166,14 @@ namespace 新警成长管理工具.VModel
 
             DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
             DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
+        }
+        #endregion
+
+        #region 设置
+        [RelayCommand]
+        private void LoginOut()
+        {
+            LoginSuccess = false;
         }
         #endregion
     }

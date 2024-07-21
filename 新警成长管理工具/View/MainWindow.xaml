@@ -197,12 +197,15 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="38"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" Text="用户名" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="3" Text="密码" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="5" Text="中共党员项" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="7" Text="统计年份" VerticalAlignment="Center"/>
+                    <Button Grid.Row="9" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=User}"/>
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=Password}"/>
                     <ComboBox Grid.Row="5" Grid.Column="2" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}" SelectedValuePath="RewardID" DisplayMemberPath="RewardName"
