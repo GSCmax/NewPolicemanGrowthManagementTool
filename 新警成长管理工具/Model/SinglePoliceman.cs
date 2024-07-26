@@ -130,6 +130,20 @@ namespace 新警成长管理工具.Model
         }
 
         /// <summary>
+        /// 警师标记
+        /// </summary>
+        [ObservableProperty]
+        [property: JsonProperty]
+        private bool canBePolicemanMaster = false;
+
+        /// <summary>
+        /// 师承
+        /// </summary>
+        [ObservableProperty]
+        [property: JsonProperty]
+        private string policemanMaster;
+
+        /// <summary>
         /// 奖励列表
         /// </summary>
         [JsonProperty]
