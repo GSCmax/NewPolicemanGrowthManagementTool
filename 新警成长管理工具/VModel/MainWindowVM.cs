@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Windows;
 using 新警成长管理工具.Model;
 using 新警成长管理工具.Tools;
 
@@ -179,6 +182,35 @@ namespace 新警成长管理工具.VModel
         #endregion
 
         #region 设置
+        [RelayCommand]
+        private void SaveImportTemplateFile()
+        {
+            var resourceStream = Application.GetResourceStream(new Uri("/新警成长管理工具;component/Resources/警员数据导入模板.xlsx", UriKind.Relative)).Stream;
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                FileName = "警员数据导入模板.xlsx",
+                Filter = "Excel 工作簿(*.xlsx)|*.xlsx"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string destinationPath = saveFileDialog.FileName;
+                using (var fileStream = File.Create(destinationPath))
+                {
+                    resourceStream.Seek(0, SeekOrigin.Begin);
+                    resourceStream.CopyTo(fileStream);
+                }
+            }
+        }
+
+        [RelayCommand]
+        private void UploadPolicemanDataFile()
+        {
+
+        }
+
         [RelayCommand]
         private void LoginOut()
         {

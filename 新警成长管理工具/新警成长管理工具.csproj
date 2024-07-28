@@ -23,6 +23,9 @@
     <Resource Include="Resources\icon.ico">
       <Link>Resources\icon.ico</Link>
     </Resource>
+    <Resource Include="Resources\警员数据导入模板.xlsx">
+      <Link>Resources\警员数据导入模板.xlsx</Link>
+    </Resource>
   </ItemGroup>
 
 </Project>
