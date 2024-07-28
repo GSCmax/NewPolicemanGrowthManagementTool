@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExcelDataReader;
+using HandyControl.Controls;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -208,7 +210,71 @@ namespace 新警成长管理工具.VModel
         [RelayCommand]
         private void UploadPolicemanDataFile()
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "Excel 工作簿(*.xlsx)|*.xlsx"
+            };
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string destinationPath = openFileDialog.FileName;
+                int importCount = 0;
+                try
+                {
+                    using (var stream = File.Open(destinationPath, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            do
+                            {
+                                while (reader.Read())
+                                {
+                                    if (reader.GetValue(0).ToString()! == "姓名*")
+                                        continue;
+
+                                    SinglePoliceman sp = new SinglePoliceman()
+                                    {
+                                        PolicemanName = reader.GetValue(0).ToString()!,
+                                        PolicemanDegree = (string)reader.GetValue(1),
+                                        PolicemanNo = reader.GetValue(2).ToString()!,
+                                        PolicemanReward = [
+                                            new SingleRewardOrPunish4Policeman(){
+                                            RewardOrPunishID = GlobalDataHelper.appConfig!.BePolicemanRewardID,
+                                            AddAdmin = UserName!,
+                                            AddTime = DateTime.Now
+                                        }
+                                        ],
+                                        PolicemanYear = (string)reader.GetValue(4),
+                                        PolicemanSource = (string)reader.GetValue(5),
+                                        PolicemanIDNo = reader.GetValue(6).ToString()!,
+                                        PolicemanAddr = (string)reader.GetValue(7),
+                                    };
+                                    if ((string)reader.GetValue(3) == "是")
+                                    {
+                                        sp.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
+                                        {
+                                            RewardOrPunishID = GlobalDataHelper.appConfig!.CommunistRewardID,
+                                            AddAdmin = UserName!,
+                                            AddTime = DateTime.Now
+                                        });
+                                    }
+                                    GlobalDataHelper.policemanLibrary!.PolicemanList.Add(sp);
+                                    importCount++;
+                                }
+                            } while (reader.NextResult());
+                        }
+                    }
+                    Growl.Success($"成功导入{importCount}条数据。");
+                }
+                catch (IOException ex)
+                {
+                    Growl.Error($"未能打开文件，请检查文件是否被占用。");
+                }
+                catch
+                {
+                    Growl.Error($"未能完整导入，已导入{importCount}条数据，其后发现错误，请检查Excel文件第{importCount + 2}行是否正确填写。");
+                }
+            }
         }
 
         [RelayCommand]

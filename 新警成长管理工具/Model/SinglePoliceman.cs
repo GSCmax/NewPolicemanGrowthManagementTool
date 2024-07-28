@@ -42,7 +42,7 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanAddr = "住址";
+        private string? policemanAddr = "住址";
 
         /// <summary>
         /// 警号
@@ -64,21 +64,21 @@ namespace 新警成长管理工具.Model
         [ObservableProperty]
         [RegularExpression("^\\d{4}$")]
         [property: JsonProperty]
-        private string policemanYear = "2000";
+        private string? policemanYear = "2000";
 
         /// <summary>
         /// 入警途径
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanSource = "";
+        private string? policemanSource = "";
 
         /// <summary>
         /// 学历
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanDegree = "";
+        private string? policemanDegree = "";
 
         /// <summary>
         /// 性别（自动）
@@ -130,7 +130,7 @@ namespace 新警成长管理工具.Model
         /// <summary>
         /// 中共党员（自动）
         /// </summary>
-        public string IfCommunist => UpdateCommunist();
+        public string? IfCommunist => UpdateCommunist();
         private string UpdateCommunist()
         {
             var temp = PolicemanReward.FirstOrDefault(a => a.RewardOrPunishID == GlobalDataHelper.appConfig!.CommunistRewardID);

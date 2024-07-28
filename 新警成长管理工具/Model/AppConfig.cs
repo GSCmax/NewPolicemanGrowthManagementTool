@@ -24,6 +24,12 @@ namespace 新警成长管理工具.Model
         private string password = "123456";
 
         /// <summary>
+        /// 光荣从警奖励项ID
+        /// </summary>
+        [ObservableProperty]
+        private Guid bePolicemanRewardID = new Guid();
+
+        /// <summary>
         /// 中共党员奖励项ID
         /// </summary>
         [ObservableProperty]
