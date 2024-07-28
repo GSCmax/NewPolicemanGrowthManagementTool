@@ -167,6 +167,15 @@ namespace 新警成长管理工具.VModel
             DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
             DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
         }
+
+        /// <summary>
+        /// 刷新警师库
+        /// </summary>
+        [RelayCommand]
+        private void UpdatePolicemanMasters()
+        {
+            GlobalDataHelper.UpdatePolicemanMasters();
+        }
         #endregion
 
         #region 设置

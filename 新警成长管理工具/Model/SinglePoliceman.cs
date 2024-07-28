@@ -21,7 +21,7 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanName = "新警姓名";
+        private string policemanName = "姓名";
 
         /// <summary>
         /// 身份证号
@@ -31,7 +31,7 @@ namespace 新警成长管理工具.Model
         [NotifyPropertyChangedFor(nameof(PolicemanSex))]
         [RegularExpression("^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$")]
         [property: JsonProperty]
-        private string policemanIDNo = "新警证件";
+        private string policemanIDNo = "320481202001010000";
         partial void OnPolicemanIDNoChanged(string value)
         {
             ValidateAllProperties();
@@ -42,7 +42,7 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanAddr = "新警住址";
+        private string policemanAddr = "住址";
 
         /// <summary>
         /// 警号
@@ -73,6 +73,9 @@ namespace 新警成长管理工具.Model
         [property: JsonProperty]
         private string policemanSource = "";
 
+        /// <summary>
+        /// 学历
+        /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
         private string policemanDegree = "";
@@ -141,7 +144,7 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanMaster;
+        private string policemanMaster = "";
 
         /// <summary>
         /// 奖励列表

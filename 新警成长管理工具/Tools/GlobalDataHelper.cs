@@ -27,6 +27,9 @@ namespace 新警成长管理工具.Tools
         /// </summary>
         public static RewardANDPunishLibrary? rewardANDPunishLibrary;
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public static void Init()
         {
             if (File.Exists(AppConfig.SavePath))
@@ -69,6 +72,9 @@ namespace 新警成长管理工具.Tools
                 policemanLibrary = new PolicemanLibrary();
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public static void Save()
         {
             var json1 = JsonConvert.SerializeObject(appConfig, Formatting.Indented);
@@ -79,6 +85,32 @@ namespace 新警成长管理工具.Tools
 
             var json3 = JsonConvert.SerializeObject(rewardANDPunishLibrary, Formatting.Indented);
             File.WriteAllText(RewardANDPunishLibrary.SavePath, json3);
+        }
+
+        /// <summary>
+        /// 更新警师列表
+        /// </summary>
+        public static void UpdatePolicemanMasters()
+        {
+            var temp1 = policemanLibrary!.PolicemanList.Where(a => a.CanBePolicemanMaster == true);
+            List<string> temp2 = [];
+            foreach (var a in temp1)
+                temp2.Add($"{a.PolicemanName}（{a.PolicemanNo}）");
+
+            //添加
+            foreach (var a in temp2)
+                if (!(policemanLibrary!.PolicemanMasters.Contains(a)))
+                    policemanLibrary!.PolicemanMasters.Add(a);
+
+            //删除
+            List<string> temp3 = [];
+            foreach (var a in policemanLibrary!.PolicemanMasters)
+                if (!(temp2.Contains(a)))
+                    temp3.Add(a);
+            foreach (var a in temp3)
+                policemanLibrary!.PolicemanMasters.Remove(a);
+
+            policemanLibrary!.PolicemanMasters.Add("");
         }
     }
 }

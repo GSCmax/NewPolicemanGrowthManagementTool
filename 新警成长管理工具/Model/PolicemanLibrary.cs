@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace 新警成长管理工具.Model
 {
@@ -10,5 +11,8 @@ namespace 新警成长管理工具.Model
         public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}PolicemanLibrary.json";
 
         public BindingList<SinglePoliceman> PolicemanList { get; set; } = [];
+
+        [JsonIgnore]
+        public BindingList<string> PolicemanMasters { get; set; } = [];
     }
 }

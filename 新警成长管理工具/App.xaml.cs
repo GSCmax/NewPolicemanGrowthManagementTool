@@ -16,6 +16,7 @@ namespace 新警成长管理工具
             base.OnStartup(e);
 
             GlobalDataHelper.Init();
+            GlobalDataHelper.UpdatePolicemanMasters();
         }
 
         protected override void OnExit(ExitEventArgs e)

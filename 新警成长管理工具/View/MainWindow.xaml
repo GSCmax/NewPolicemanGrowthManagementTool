@@ -46,7 +46,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="　新警库　">
+            <TabItem Header="　警员库　">
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -66,12 +66,21 @@
                             <DataGridTextColumn Header="警号*" Width="90" Binding="{Binding PolicemanNo}"/>
                             <DataGridTextColumn Header="中共党员" Width="90" Binding="{Binding IfCommunist}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="入警时间*" Width="90" Binding="{Binding PolicemanYear}"/>
-                            <!--<DataGridComboBoxColumn Header="入警时间*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}" SelectedItemBinding="{Binding PolicemanYear}"/>-->
                             <DataGridComboBoxColumn Header="入警途径*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanSource}" SelectedItemBinding="{Binding PolicemanSource}"/>
                             <DataGridTextColumn Header="身份证号*" Width="180" Binding="{Binding PolicemanIDNo}"/>
-                            <!--<DataGridTextColumn Header="家庭住址*" Width="*" Binding="{Binding PolicemanAddr}"/>-->
                             <DataGridCheckBoxColumn Header="警师*" Width="60" Binding="{Binding CanBePolicemanMaster}"/>
-                            <DataGridComboBoxColumn Header="师承警师*" Width="*" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanList}" SelectedItemBinding="{Binding PolicemanMaster}" SelectedValuePath="PolicemanNo" DisplayMemberPath="PolicemanName"/>
+                            <DataGridComboBoxColumn Width="120" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}">
+                                <DataGridComboBoxColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.DataContext>
+                                            <vm:MainWindowVM/>
+                                        </StackPanel.DataContext>
+                                        <Button Style="{StaticResource ButtonIconCircular.Small}" Margin="0,0,5,0" hc:IconElement.Geometry="{StaticResource RotateRightGeometry}" Command="{Binding UpdatePolicemanMastersCommand}"/>
+                                        <TextBlock Text="师承警师*" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataGridComboBoxColumn.Header>
+                            </DataGridComboBoxColumn>
+                            <DataGridTextColumn Header="住址*" Width="*" Binding="{Binding PolicemanAddr}"/>
                             <DataGridTextColumn Header="积分" Width="60" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -147,21 +156,6 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <!--<TabItem Header="　警师库　">
-                <DataGrid Margin="0,10,0,0" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanList}"
-                          HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="50"
-                          hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名*" Width="90" Binding="{Binding PolicemanName}"/>
-                        <DataGridTextColumn Header="性别" Width="60" Binding="{Binding PolicemanSex}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="年龄" Width="60" Binding="{Binding PolicemanAge}" IsReadOnly="True"/>
-                        <DataGridComboBoxColumn Header="学历*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanDegree}" SelectedItemBinding="{Binding PolicemanDegree}"/>
-                        <DataGridTextColumn Header="警号*" Width="90" Binding="{Binding PolicemanNo}"/>
-                        <DataGridTextColumn Header="身份证号*" Width="180" Binding="{Binding PolicemanIDNo}"/>
-                        <DataGridTextColumn Header="积分" Width="*" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>-->
             <TabItem Header="　奖惩库　">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -179,7 +173,7 @@
                               HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="50"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.InputBindings>
-                            <KeyBinding Key="Delete" Command="{Binding RDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid},Path=SelectedItem}"/>
+                            <KeyBinding Key="Delete" Command="{Binding RDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},Path=SelectedItem}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="奖励*" Width="*" Binding="{Binding RewardName}"/>
@@ -190,7 +184,7 @@
                               HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="50"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.InputBindings>
-                            <KeyBinding Key="Delete" Command="{Binding PDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid},Path=SelectedItem}"/>
+                            <KeyBinding Key="Delete" Command="{Binding PDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},Path=SelectedItem}"/>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="惩罚*" Width="*" Binding="{Binding PunishName}"/>
@@ -215,20 +209,24 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="38"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" Text="用户名" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="3" Text="密码" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="5" Text="中共党员项" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="7" Text="统计年份" VerticalAlignment="Center"/>
-                    <Button Grid.Row="9" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
+                    <TextBlock Grid.Row="5" Text="中共党员奖励项" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="7" Text="警师积分系数" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="9" Text="统计年份" VerticalAlignment="Center"/>
+                    <Button Grid.Row="11" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=User}"/>
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=Password}"/>
                     <ComboBox Grid.Row="5" Grid.Column="2" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}" SelectedValuePath="RewardID" DisplayMemberPath="RewardName"
                               SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=CommunistRewardID}"/>
-                    <Border Grid.Row="7" Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                    <hc:NumericUpDown Grid.Row="7" Grid.Column="2" Maximum="1" Minimum="0" DecimalPlaces="2" Increment="0.05"/>
+                    <Border Grid.Row="9" Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
                         <Grid>
                             <Grid.Resources>
                                 <Style x:Key="TagCustomStyle3" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
