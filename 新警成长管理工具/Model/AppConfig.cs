@@ -30,6 +30,12 @@ namespace 新警成长管理工具.Model
         private Guid communistRewardID = new Guid();
 
         /// <summary>
+        /// 警师积分系数
+        /// </summary>
+        [ObservableProperty]
+        private double scoreComeByApprenticeCoefficient = 0.2;
+
+        /// <summary>
         /// 默认入警时间
         /// </summary>
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]

@@ -69,7 +69,7 @@
                             <DataGridComboBoxColumn Header="入警途径*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanSource}" SelectedItemBinding="{Binding PolicemanSource}"/>
                             <DataGridTextColumn Header="身份证号*" Width="180" Binding="{Binding PolicemanIDNo}"/>
                             <DataGridCheckBoxColumn Header="警师*" Width="60" Binding="{Binding CanBePolicemanMaster}"/>
-                            <DataGridComboBoxColumn Width="120" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}">
+                            <DataGridComboBoxColumn Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}">
                                 <DataGridComboBoxColumn.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel.DataContext>
@@ -81,7 +81,7 @@
                                 </DataGridComboBoxColumn.Header>
                             </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="住址*" Width="*" Binding="{Binding PolicemanAddr}"/>
-                            <DataGridTextColumn Header="积分" Width="60" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="积分" Width="90" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Border Grid.Column="2" Width="400" Margin="5,0,0,0" Visibility="Collapsed" Name="bd" Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
@@ -93,7 +93,7 @@
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="24">
                                 <TextBlock.Text>
-                                    <MultiBinding StringFormat="警员：{0}（积分：{1}）">
+                                    <MultiBinding StringFormat="{}{0}（积分：{1}）">
                                         <Binding Path="Sp.PolicemanName"/>
                                         <Binding Path="Sp.PolicemanScore"/>
                                     </MultiBinding>
@@ -225,7 +225,7 @@
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=Password}"/>
                     <ComboBox Grid.Row="5" Grid.Column="2" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}" SelectedValuePath="RewardID" DisplayMemberPath="RewardName"
                               SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=CommunistRewardID}"/>
-                    <hc:NumericUpDown Grid.Row="7" Grid.Column="2" Maximum="1" Minimum="0" DecimalPlaces="2" Increment="0.05"/>
+                    <hc:NumericUpDown Grid.Row="7" Grid.Column="2" Maximum="1" Minimum="0" DecimalPlaces="2" Increment="0.05" Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=ScoreComeByApprenticeCoefficient}"/>
                     <Border Grid.Row="9" Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
                         <Grid>
                             <Grid.Resources>

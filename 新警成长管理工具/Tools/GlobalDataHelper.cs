@@ -95,14 +95,23 @@ namespace 新警成长管理工具.Tools
             var temp1 = policemanLibrary!.PolicemanList.Where(a => a.CanBePolicemanMaster == true);
             List<string> temp2 = [];
             foreach (var a in temp1)
-                temp2.Add($"{a.PolicemanName}（{a.PolicemanNo}）");
+            {
+                string PolicemanMasterItem = $"{a.PolicemanName}（{a.PolicemanNo}）";
+                temp2.Add(PolicemanMasterItem);
 
-            //添加
+                //计算得分
+                double s = 0;
+                foreach (var pm in policemanLibrary!.PolicemanList.Where(b => b.PolicemanMaster == PolicemanMasterItem))
+                    s += pm.PolicemanScore;
+                a.ScoreFromApprentice = s;
+            }
+
+            //添加警师
             foreach (var a in temp2)
                 if (!(policemanLibrary!.PolicemanMasters.Contains(a)))
                     policemanLibrary!.PolicemanMasters.Add(a);
 
-            //删除
+            //删除警师
             List<string> temp3 = [];
             foreach (var a in policemanLibrary!.PolicemanMasters)
                 if (!(temp2.Contains(a)))
@@ -110,6 +119,7 @@ namespace 新警成长管理工具.Tools
             foreach (var a in temp3)
                 policemanLibrary!.PolicemanMasters.Remove(a);
 
+            //添加一个空项
             policemanLibrary!.PolicemanMasters.Add("");
         }
     }

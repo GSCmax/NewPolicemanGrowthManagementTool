@@ -105,6 +105,13 @@ namespace 新警成长管理工具.Model
         }
 
         /// <summary>
+        /// 来自徒弟的积分
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PolicemanScore))]
+        private double scoreFromApprentice;
+
+        /// <summary>
         /// 成长值（自动）
         /// </summary>
         public double PolicemanScore => UpdateScore();
@@ -116,7 +123,8 @@ namespace 新警成长管理工具.Model
                 a += GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == r.RewardOrPunishID)!.RewardScore;
             foreach (var p in PolicemanPunish)
                 b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == p.RewardOrPunishID)!.PunishScore;
-            return a - b;
+            //来自徒弟的积分
+            return a - b + ScoreFromApprentice * GlobalDataHelper.appConfig!.ScoreComeByApprenticeCoefficient;
         }
 
         /// <summary>
