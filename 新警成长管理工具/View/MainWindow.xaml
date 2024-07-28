@@ -224,7 +224,7 @@
                     <TextBlock Grid.Row="5" Text="光荣从警奖励项" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="7" Text="中共党员奖励项" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="9" Text="警师积分系数" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="11" Text="统计年份" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="11" Text="首页统计年份" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="13" Text="警员数据导入" VerticalAlignment="Center"/>
                     <Button Grid.Row="15" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=User}"/>
@@ -248,7 +248,7 @@
                             </Grid.RowDefinitions>
                             <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="White" ItemContainerStyle="{StaticResource TagCustomStyle3}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}"/>
                             <DockPanel Grid.Row="1" Margin="5,0,5,5" LastChildFill="True">
-                                <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding AddYearCommand}"/>
+                                <Button DockPanel.Dock="Right" Content="添加" Command="{Binding AddYearCommand}"/>
                                 <TextBox Margin="0,0,5,0" Text="{Binding NeedAddYear}"/>
                             </DockPanel>
                         </Grid>
