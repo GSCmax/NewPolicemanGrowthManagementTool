@@ -7,6 +7,7 @@
            xmlns:tools="clr-namespace:新警成长管理工具.Tools"
            xmlns:vm="clr-namespace:新警成长管理工具.VModel"
            xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
            mc:Ignorable="d"
            Title="{Binding Source={x:Static tools:GlobalDataHelper.appVersion}, StringFormat=新警成长管理工具 v{0}}"
            Height="900" Width="1500"
@@ -53,10 +54,10 @@
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="ButtonShiftOut" Click="ButtonShiftOut_Click" hc:IconElement.Geometry="{StaticResource LeftGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
-                    <Button x:Name="ButtonShiftIn" Visibility="Collapsed" Click="ButtonShiftIn_Click" hc:IconElement.Geometry="{StaticResource RightGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
+                    <Button x:Name="ButtonShiftOut" Visibility="Collapsed" Click="ButtonShiftOut_Click" hc:IconElement.Geometry="{StaticResource LeftGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
+                    <Button x:Name="ButtonShiftIn" Click="ButtonShiftIn_Click" hc:IconElement.Geometry="{StaticResource RightGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
                     <DataGrid Grid.Column="0" Margin="0,0,5,0" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanList}" SelectedItem="{Binding Sp}"
-                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="60"
+                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="60" SelectedIndex="0"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="姓名*" Width="90" Binding="{Binding PolicemanName}"/>
@@ -84,7 +85,7 @@
                             <DataGridTextColumn Header="积分" Width="90" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Border Grid.Column="2" Width="400" Margin="5,0,0,0" Visibility="Collapsed" Name="bd" Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                    <Border Grid.Column="2" Width="400" Margin="5,0,0,0" Visibility="Visible" Name="bd" Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -99,8 +100,13 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <hc:SimplePanel Grid.Row="1">
-                                <Canvas>
+                            <Border Grid.Row="1" Margin="5,10,5,5" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="White">
+                                <hc:SimplePanel >
+                                    <!--#region livechart-->
+                                    <lvc:PolarChart Series="{Binding Series}" AngleAxes="{Binding AngleAxes}"/>
+                                    <!--#endregion-->
+                                    <!--#region 成长树-->
+                                    <!--<Canvas>
                                     <ItemsControl ItemsSource="{Binding Branches}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -113,9 +119,11 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                </Canvas>
-                                <Button Content="刷新" Style="{StaticResource ButtonPrimary}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,20" Command="{Binding UpdateTreeCommand}"/>
-                            </hc:SimplePanel>
+                                </Canvas>-->
+                                    <!--#endregion-->
+                                    <Button Content="刷新" Style="{StaticResource ButtonPrimary}" hc:BorderElement.CornerRadius="4,0,4,0" Margin="0,0,-1,-1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding UpdateTreeCommand}"/>
+                                </hc:SimplePanel>
+                            </Border>
                             <Grid Grid.Row="2">
                                 <Grid.Resources>
                                     <Style x:Key="TagCustomStyle1" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
@@ -177,6 +185,7 @@
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="奖励*" Width="*" Binding="{Binding RewardName}"/>
+                            <DataGridComboBoxColumn Header="奖励类别*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=RewardANDPunishCategory}" SelectedItemBinding="{Binding RewardANDPunishCategory}"/>
                             <DataGridTextColumn Header="加分值*" Width="90" Binding="{Binding RewardScore}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -188,6 +197,7 @@
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="惩罚*" Width="*" Binding="{Binding PunishName}"/>
+                            <DataGridComboBoxColumn Header="奖励类别*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=RewardANDPunishCategory}" SelectedItemBinding="{Binding RewardANDPunishCategory}"/>
                             <DataGridTextColumn Header="扣分值*" Width="90" Binding="{Binding PunishScore}"/>
                         </DataGrid.Columns>
                     </DataGrid>

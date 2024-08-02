@@ -2,8 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using ExcelDataReader;
 using HandyControl.Controls;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using Microsoft.Win32;
-using System.ComponentModel;
+using SkiaSharp;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Windows;
@@ -103,8 +106,78 @@ namespace 新警成长管理工具.VModel
         {
             if (Sp != null)
             {
-                Branches.Clear();
-                DrawTree(200, 380, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
+                #region 成长树相关（弃用）
+                //Branches.Clear();
+                //DrawTree(200, 380, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
+                #endregion
+
+                double a = 0, b = 0, c = 0, d = 0, e = 0, f = 0;
+
+                foreach (var temp1 in Sp.PolicemanReward)
+                {
+                    var temp2 = GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == temp1.RewardOrPunishID);
+                    if (temp2 != null)
+                    {
+                        switch (temp2.RewardANDPunishCategory)
+                        {
+                            case "基础":
+                                a += temp2.RewardScore;
+                                break;
+                            case "德":
+                                b += temp2.RewardScore;
+                                break;
+                            case "能":
+                                c += temp2.RewardScore;
+                                break;
+                            case "勤":
+                                d += temp2.RewardScore;
+                                break;
+                            case "绩":
+                                e += temp2.RewardScore;
+                                break;
+                            case "廉":
+                                d += temp2.RewardScore;
+                                break;
+                        }
+                    }
+                }
+
+                foreach (var temp1 in Sp.PolicemanPunish)
+                {
+                    var temp2 = GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == temp1.RewardOrPunishID);
+                    if (temp2 != null)
+                    {
+                        switch (temp2.RewardANDPunishCategory)
+                        {
+                            case "基础":
+                                a -= temp2.PunishScore;
+                                break;
+                            case "德":
+                                b -= temp2.PunishScore;
+                                break;
+                            case "能":
+                                c -= temp2.PunishScore;
+                                break;
+                            case "勤":
+                                d -= temp2.PunishScore;
+                                break;
+                            case "绩":
+                                e -= temp2.PunishScore;
+                                break;
+                            case "廉":
+                                d -= temp2.PunishScore;
+                                break;
+                        }
+                    }
+                }
+
+                Series = [new PolarLineSeries<double>{
+                    Values = [b, c, d, e, f],
+                    LineSmoothness = 0,
+                    GeometrySize = 0,
+                    Fill = new SolidColorPaint(new SKColor(50, 108, 243,180)),
+                    Stroke = new SolidColorPaint(new SKColor(50, 108, 243)),
+                }];
             }
         }
 
@@ -150,28 +223,53 @@ namespace 新警成长管理工具.VModel
             }
         }
 
-        public BindingList<Branch> Branches { get; set; } = [];
+        #region 雷达图相关
+        /// <summary>
+        /// 项目数据
+        /// </summary>
+        [ObservableProperty]
+        private ISeries[] series = [new PolarLineSeries<double>()];
 
-        private void DrawTree(double x1, double y1, double angle, double length, double thickness, int depth)
-        {
-            if (depth == 0)
-                return;
-
-            double x2 = x1 + (Math.Cos(angle * Math.PI / 180) * length);
-            double y2 = y1 + (Math.Sin(angle * Math.PI / 180) * length);
-
-            Branches.Add(new Branch
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public PolarAxis[] AngleAxes { get; set; } = {
+            new PolarAxis
             {
-                X1 = x1,
-                Y1 = y1,
-                X2 = x2,
-                Y2 = y2,
-                Thickness = thickness
-            });
+                LabelsRotation = LiveCharts.TangentAngle,
+                Labels = ["德", "能", "勤", "绩", "廉"],
+                LabelsPaint = new SolidColorPaint {
+                    Color = SKColors.Black,
+                    SKTypeface = SKFontManager.Default.MatchCharacter('汉')
+                },
+            }
+        };
+        #endregion
 
-            DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
-            DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
-        }
+        #region 成长树相关（弃用）
+        //public BindingList<Branch> Branches { get; set; } = [];
+
+        //private void DrawTree(double x1, double y1, double angle, double length, double thickness, int depth)
+        //{
+        //    if (depth == 0)
+        //        return;
+
+        //    double x2 = x1 + (Math.Cos(angle * Math.PI / 180) * length);
+        //    double y2 = y1 + (Math.Sin(angle * Math.PI / 180) * length);
+
+        //    Branches.Add(new Branch
+        //    {
+        //        X1 = x1,
+        //        Y1 = y1,
+        //        X2 = x2,
+        //        Y2 = y2,
+        //        Thickness = thickness
+        //    });
+
+        //    DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
+        //    DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
+        //}
+        #endregion
 
         /// <summary>
         /// 刷新警师库
@@ -266,7 +364,7 @@ namespace 新警成长管理工具.VModel
                     }
                     Growl.Success($"成功导入{importCount}条数据。");
                 }
-                catch (IOException ex)
+                catch (IOException)
                 {
                     Growl.Error($"未能打开文件，请检查文件是否被占用。");
                 }

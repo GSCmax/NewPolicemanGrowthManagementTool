@@ -58,5 +58,11 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public BindingList<string> PolicemanDegree { get; set; } = ["本科生", "研究生"];
+
+        /// <summary>
+        /// 默认奖惩分类
+        /// </summary>
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public BindingList<string> RewardANDPunishCategory { get; set; } = ["基础", "德", "能", "勤", "绩", "廉"];
     }
 }

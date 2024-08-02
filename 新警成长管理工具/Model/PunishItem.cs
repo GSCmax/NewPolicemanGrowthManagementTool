@@ -12,5 +12,8 @@ namespace 新警成长管理工具.Model
 
         [ObservableProperty]
         private double punishScore = 1.0;
+
+        [ObservableProperty]
+        private string rewardANDPunishCategory = "基础";
     }
 }
