@@ -27,13 +27,13 @@ namespace 新警成长管理工具.Model
         /// 光荣从警奖励项ID
         /// </summary>
         [ObservableProperty]
-        private Guid bePolicemanRewardID = new Guid();
+        private Guid bePolicemanRewardID = Guid.NewGuid();
 
         /// <summary>
         /// 中共党员奖励项ID
         /// </summary>
         [ObservableProperty]
-        private Guid communistRewardID = new Guid();
+        private Guid communistRewardID = Guid.NewGuid();
 
         /// <summary>
         /// 警师积分系数
@@ -51,7 +51,7 @@ namespace 新警成长管理工具.Model
         /// 默认入警途径
         /// </summary>
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-        public BindingList<string> PolicemanSource { get; set; } = ["警校", "社招", "军转"];
+        public BindingList<string> PolicemanSource { get; set; } = ["警校", "社招", "特招", "军转", "名校优生"];
 
         /// <summary>
         /// 默认学历
