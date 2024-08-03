@@ -123,7 +123,7 @@ namespace 新警成长管理工具.VModel
                     LabelsPaint = new SolidColorPaint {
                         Color = SKColors.Black,
                         SKTypeface = SKFontManager.Default.MatchCharacter('汉')
-                    },
+                    }
                 }];
 
                 Series = [new PolarLineSeries<double>{
@@ -132,6 +132,7 @@ namespace 新警成长管理工具.VModel
                     GeometrySize = 0,
                     Fill = new SolidColorPaint(new SKColor(50, 108, 243,204)),
                     Stroke = new SolidColorPaint(new SKColor(50, 108, 243)),
+                    IsHoverable = false
                 }];
                 #endregion
             }

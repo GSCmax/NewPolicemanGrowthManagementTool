@@ -12,7 +12,7 @@
            Title="{Binding Source={x:Static tools:GlobalDataHelper.appVersion}, StringFormat=新警成长管理工具 v{0}}"
            Height="900" Width="1500"
            MinHeight="600" MinWidth="1000"
-           Background="White"
+           Background="{DynamicResource RegionBrush}"
            WindowStartupLocation="CenterScreen"
            Icon="/新警成长管理工具;component/Resources/icon.ico"
            BorderBrush="{DynamicResource PrimaryBrush}">
@@ -99,7 +99,7 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <Border Grid.Row="1" Margin="5,10,5,5" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="White">
+                            <Border Grid.Row="1" Margin="5,10,5,5" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource RegionBrush}">
                                 <hc:SimplePanel >
                                     <!--#region 雷达图-->
                                     <lvc:PolarChart Visibility="{Binding ElementName=rb1, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}"
@@ -149,7 +149,7 @@
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="奖励" Margin="5,0,0,0"/>
-                                <hc:TagContainer Grid.Row="1" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle1}" ItemsSource="{Binding Sp.PolicemanReward}"/>
+                                <hc:TagContainer Grid.Row="1" Background="{DynamicResource RegionBrush}" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle1}" ItemsSource="{Binding Sp.PolicemanReward}"/>
                                 <DockPanel Grid.Row="2" LastChildFill="True" Margin="5,0,5,0">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding RAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}"
@@ -157,7 +157,7 @@
                                 </DockPanel>
                                 <GridSplitter Grid.Row="3" Margin="5,0" Foreground="{DynamicResource BorderBrush}" Height="2"/>
                                 <TextBlock Grid.Row="4" Text="惩罚" Margin="5,0,0,0"/>
-                                <hc:TagContainer Grid.Row="5" Background="White" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle2}" ItemsSource="{Binding Sp.PolicemanPunish}"/>
+                                <hc:TagContainer Grid.Row="5" Background="{DynamicResource RegionBrush}" Margin="5" ItemContainerStyle="{StaticResource TagCustomStyle2}" ItemsSource="{Binding Sp.PolicemanPunish}"/>
                                 <DockPanel Grid.Row="6" LastChildFill="True" Margin="5,0,5,5">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding PAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=PunishItems}"
@@ -263,7 +263,7 @@
                                 <RowDefinition Height="100"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="White" ItemContainerStyle="{StaticResource TagCustomStyle3}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}"/>
+                            <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="{DynamicResource RegionBrush}" ItemContainerStyle="{StaticResource TagCustomStyle3}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}"/>
                             <DockPanel Grid.Row="1" Margin="5,0,5,5" LastChildFill="True">
                                 <Button DockPanel.Dock="Right" Content="添加" Command="{Binding AddYearCommand}"/>
                                 <TextBox Margin="0,0,5,0" Text="{Binding NeedAddYear}"/>
@@ -282,7 +282,7 @@
                                 <RowDefinition Height="100"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="White" ItemContainerStyle="{StaticResource TagCustomStyle4}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=RewardANDPunishCategory}"/>
+                            <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="{DynamicResource RegionBrush}" ItemContainerStyle="{StaticResource TagCustomStyle4}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=RewardANDPunishCategory}"/>
                             <DockPanel Grid.Row="1" Margin="5,0,5,5" LastChildFill="True">
                                 <Button DockPanel.Dock="Right" Content="添加" Command="{Binding AddCategoryCommand}"/>
                                 <TextBox Margin="0,0,5,0" Text="{Binding NeedAddCategory}"/>
