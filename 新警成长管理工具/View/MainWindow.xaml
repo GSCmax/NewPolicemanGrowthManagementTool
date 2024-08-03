@@ -19,7 +19,6 @@
     <hc:Window.DataContext>
         <vm:MainWindowVM/>
     </hc:Window.DataContext>
-
     <hc:SimplePanel>
         <!--#region 内容页-->
         <TabControl Style="{StaticResource TabControlSliding}" Margin="10,5,10,10" BorderThickness="0,1,0,0" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}">
@@ -89,7 +88,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition Height="400"/>
+                                <RowDefinition Height="443"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Margin="0,10,0,0" HorizontalAlignment="Center" FontSize="24">
@@ -102,26 +101,30 @@
                             </TextBlock>
                             <Border Grid.Row="1" Margin="5,10,5,5" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="White">
                                 <hc:SimplePanel >
-                                    <!--#region livechart-->
-                                    <lvc:PolarChart Series="{Binding Series}" AngleAxes="{Binding AngleAxes}"/>
+                                    <!--#region 雷达图-->
+                                    <lvc:PolarChart Visibility="{Binding ElementName=rb1, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}" Series="{Binding Series}" AngleAxes="{Binding AngleAxes}"/>
                                     <!--#endregion-->
                                     <!--#region 成长树-->
-                                    <!--<Canvas>
-                                    <ItemsControl ItemsSource="{Binding Branches}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <Canvas />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="{Binding Thickness}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Canvas>-->
+                                    <Canvas Visibility="{Binding ElementName=rb2, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                        <ItemsControl ItemsSource="{Binding Branches}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <Canvas />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="{Binding Thickness}" Opacity="0.8"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Canvas>
                                     <!--#endregion-->
-                                    <Button Content="刷新" Style="{StaticResource ButtonPrimary}" hc:BorderElement.CornerRadius="4,0,4,0" Margin="0,0,-1,-1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding UpdateTreeCommand}"/>
+                                    <hc:ButtonGroup Margin="0,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <RadioButton Name="rb1" Content="雷达图" IsChecked="True"/>
+                                        <RadioButton Name="rb2" Content="成长树"/>
+                                        <Button Content="刷新" Command="{Binding UpdateTreeCommand}"/>
+                                    </hc:ButtonGroup>
                                 </hc:SimplePanel>
                             </Border>
                             <Grid Grid.Row="2">
@@ -227,6 +230,8 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" Text="用户名" VerticalAlignment="Center"/>
@@ -235,8 +240,9 @@
                     <TextBlock Grid.Row="7" Text="中共党员奖励项" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="9" Text="警师积分系数" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="11" Text="首页统计年份" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="13" Text="警员数据导入" VerticalAlignment="Center"/>
-                    <Button Grid.Row="15" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
+                    <TextBlock Grid.Row="13" Text="奖惩评价维度" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="15" Text="警员数据导入" VerticalAlignment="Center"/>
+                    <Button Grid.Row="17" Grid.ColumnSpan="3" Content="退出登录" HorizontalAlignment="Stretch" Style="{StaticResource ButtonPrimary}" Command="{Binding LoginOutCommand}"/>
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=User}"/>
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=Password}"/>
                     <ComboBox Grid.Row="5" Grid.Column="2" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}" SelectedValuePath="RewardID" DisplayMemberPath="RewardName"
@@ -263,7 +269,26 @@
                             </DockPanel>
                         </Grid>
                     </Border>
-                    <hc:ButtonGroup Grid.Row="13" Grid.Column="2">
+                    <Border Grid.Row="13" Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style x:Key="TagCustomStyle4" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
+                                    <Setter Property="Content" Value="{Binding}"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <hc:TagContainer Grid.Row="0" BorderThickness="0" Background="White" ItemContainerStyle="{StaticResource TagCustomStyle4}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=RewardANDPunishCategory}"/>
+                            <DockPanel Grid.Row="1" Margin="5,0,5,5" LastChildFill="True">
+                                <Button DockPanel.Dock="Right" Content="添加" Command="{Binding AddCategoryCommand}"/>
+                                <TextBox Margin="0,0,5,0" Text="{Binding NeedAddCategory}"/>
+                            </DockPanel>
+                        </Grid>
+                    </Border>
+                    <hc:ButtonGroup Grid.Row="15" Grid.Column="2">
                         <Button Content="下载导入模板" Command="{Binding SaveImportTemplateFileCommand}"/>
                         <Button Content="上传导入数据" Command="{Binding UploadPolicemanDataFileCommand}"/>
                     </hc:ButtonGroup>
@@ -273,7 +298,6 @@
         <TextBlock Text="{Binding UserName, StringFormat=当前用户：{0}}" Margin="0,13,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <hc:Watermark Mark="{Binding UserName}" FontSize="50" MarkMargin="30,10" IsHitTestVisible="False" Opacity=".25" Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityConverter}}"/>
         <!--#endregion-->
-
         <!--#region 登录页-->
         <Grid Visibility="{Binding LoginSuccess, Converter={StaticResource Boolean2VisibilityReConverter}}">
             <Grid.RowDefinitions>
@@ -298,7 +322,11 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <hc:TextBox Grid.Row="0" Grid.Column="0" FontSize="20" Height="40" Width="400" hc:InfoElement.TitleWidth="auto" hc:InfoElement.TitlePlacement="Left"
-                            hc:InfoElement.Title="用户名：" Text="{Binding UserName}" hc:InfoElement.ShowClearButton="True"/>
+                            hc:InfoElement.Title="用户名：" Text="{Binding UserName}" hc:InfoElement.ShowClearButton="True">
+                    <hc:TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding LoginCommand}"/>
+                    </hc:TextBox.InputBindings>
+                </hc:TextBox>
                 <hc:PasswordBox Grid.Row="2" Grid.Column="0" FontSize="20" Height="40" Width="400" hc:InfoElement.TitleWidth="auto" hc:InfoElement.TitlePlacement="Left"
                                 hc:InfoElement.Title="密　码：" hc:InfoElement.ShowClearButton="True" ShowEyeButton="True" PasswordBox.PasswordChanged="PasswordBox_PasswordChanged">
                     <hc:PasswordBox.InputBindings>

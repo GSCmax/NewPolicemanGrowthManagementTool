@@ -7,6 +7,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Microsoft.Win32;
 using SkiaSharp;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Windows;
@@ -31,20 +32,6 @@ namespace 新警成长管理工具.VModel
         public string? Line3 => $"中共党员{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.IfCommunist == "是").Count()}人，研究生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "研究生").Count()}人，本科生{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).Where(b => b.PolicemanDegree == "本科生").Count()}人；";
         public string? Line4 => $"积分排名前三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderByDescending(b => b.PolicemanScore).ElementAt(2).PolicemanName}；";
         public string? Line5 => $"　　　　末三位是{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(0).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(1).PolicemanName}，{GlobalDataHelper.policemanLibrary!.PolicemanList.Where(a => a.PolicemanYear == SelectedYear).OrderBy(b => b.PolicemanScore).ElementAt(2).PolicemanName}。";
-
-        [ObservableProperty]
-        [RegularExpression("^\\d{4}$")]
-        private string? needAddYear;
-
-        [RelayCommand]
-        private void AddYear()
-        {
-            ValidateAllProperties();
-            if (!HasErrors)
-                if (NeedAddYear != null)
-                    if (!GlobalDataHelper.appConfig!.PolicemanYear.Contains(NeedAddYear))
-                        GlobalDataHelper.appConfig!.PolicemanYear.Add(NeedAddYear);
-        }
         #endregion
 
         #region 登录页
@@ -106,78 +93,47 @@ namespace 新警成长管理工具.VModel
         {
             if (Sp != null)
             {
-                #region 成长树相关（弃用）
-                //Branches.Clear();
-                //DrawTree(200, 380, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
+                #region 成长树相关
+                Branches.Clear();
+                DrawTree(193, 380, -90, 100, Sp!.PolicemanScore * 0.1, Sp!.PolicemanReward.Count);
                 #endregion
 
-                double a = 0, b = 0, c = 0, d = 0, e = 0, f = 0;
+                #region 雷达图相关
+                Dictionary<string, double> categoryScore = new Dictionary<string, double>();
+                foreach (var temp in GlobalDataHelper.appConfig!.RewardANDPunishCategory)
+                    categoryScore.Add(temp, 0);
 
                 foreach (var temp1 in Sp.PolicemanReward)
                 {
                     var temp2 = GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == temp1.RewardOrPunishID);
                     if (temp2 != null)
-                    {
-                        switch (temp2.RewardANDPunishCategory)
-                        {
-                            case "基础":
-                                a += temp2.RewardScore;
-                                break;
-                            case "德":
-                                b += temp2.RewardScore;
-                                break;
-                            case "能":
-                                c += temp2.RewardScore;
-                                break;
-                            case "勤":
-                                d += temp2.RewardScore;
-                                break;
-                            case "绩":
-                                e += temp2.RewardScore;
-                                break;
-                            case "廉":
-                                d += temp2.RewardScore;
-                                break;
-                        }
-                    }
+                        categoryScore[temp2.RewardANDPunishCategory] += temp2.RewardScore;
                 }
 
                 foreach (var temp1 in Sp.PolicemanPunish)
                 {
                     var temp2 = GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == temp1.RewardOrPunishID);
                     if (temp2 != null)
-                    {
-                        switch (temp2.RewardANDPunishCategory)
-                        {
-                            case "基础":
-                                a -= temp2.PunishScore;
-                                break;
-                            case "德":
-                                b -= temp2.PunishScore;
-                                break;
-                            case "能":
-                                c -= temp2.PunishScore;
-                                break;
-                            case "勤":
-                                d -= temp2.PunishScore;
-                                break;
-                            case "绩":
-                                e -= temp2.PunishScore;
-                                break;
-                            case "廉":
-                                d -= temp2.PunishScore;
-                                break;
-                        }
-                    }
+                        categoryScore[temp2.RewardANDPunishCategory] -= temp2.PunishScore;
                 }
 
+                AngleAxes = [new PolarAxis {
+                    LabelsRotation = LiveCharts.TangentAngle,
+                    Labels = GlobalDataHelper.appConfig!.RewardANDPunishCategory,
+                    LabelsPaint = new SolidColorPaint {
+                        Color = SKColors.Black,
+                        SKTypeface = SKFontManager.Default.MatchCharacter('汉')
+                    },
+                }];
+
                 Series = [new PolarLineSeries<double>{
-                    Values = [b, c, d, e, f],
+                    Values = categoryScore.Values,
                     LineSmoothness = 0,
                     GeometrySize = 0,
-                    Fill = new SolidColorPaint(new SKColor(50, 108, 243,180)),
+                    Fill = new SolidColorPaint(new SKColor(50, 108, 243,204)),
                     Stroke = new SolidColorPaint(new SKColor(50, 108, 243)),
                 }];
+                #endregion
             }
         }
 
@@ -233,42 +189,33 @@ namespace 新警成长管理工具.VModel
         /// <summary>
         /// 项目名称
         /// </summary>
-        public PolarAxis[] AngleAxes { get; set; } = {
-            new PolarAxis
-            {
-                LabelsRotation = LiveCharts.TangentAngle,
-                Labels = ["德", "能", "勤", "绩", "廉"],
-                LabelsPaint = new SolidColorPaint {
-                    Color = SKColors.Black,
-                    SKTypeface = SKFontManager.Default.MatchCharacter('汉')
-                },
-            }
-        };
+        [ObservableProperty]
+        private PolarAxis[] angleAxes = [new PolarAxis()];
         #endregion
 
-        #region 成长树相关（弃用）
-        //public BindingList<Branch> Branches { get; set; } = [];
+        #region 成长树相关
+        public BindingList<Branch> Branches { get; set; } = [];
 
-        //private void DrawTree(double x1, double y1, double angle, double length, double thickness, int depth)
-        //{
-        //    if (depth == 0)
-        //        return;
+        private void DrawTree(double x1, double y1, double angle, double length, double thickness, int depth)
+        {
+            if (depth == 0)
+                return;
 
-        //    double x2 = x1 + (Math.Cos(angle * Math.PI / 180) * length);
-        //    double y2 = y1 + (Math.Sin(angle * Math.PI / 180) * length);
+            double x2 = x1 + (Math.Cos(angle * Math.PI / 180) * length);
+            double y2 = y1 + (Math.Sin(angle * Math.PI / 180) * length);
 
-        //    Branches.Add(new Branch
-        //    {
-        //        X1 = x1,
-        //        Y1 = y1,
-        //        X2 = x2,
-        //        Y2 = y2,
-        //        Thickness = thickness
-        //    });
+            Branches.Add(new Branch
+            {
+                X1 = x1,
+                Y1 = y1,
+                X2 = x2,
+                Y2 = y2,
+                Thickness = thickness
+            });
 
-        //    DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
-        //    DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
-        //}
+            DrawTree(x2, y2, angle - 25, length * 0.8, thickness * 0.8, depth - 1);
+            DrawTree(x2, y2, angle + 25, length * 0.8, thickness * 0.8, depth - 1);
+        }
         #endregion
 
         /// <summary>
@@ -282,6 +229,31 @@ namespace 新警成长管理工具.VModel
         #endregion
 
         #region 设置
+        [ObservableProperty]
+        [RegularExpression("^\\d{4}$")]
+        private string? needAddYear;
+
+        [RelayCommand]
+        private void AddYear()
+        {
+            ValidateAllProperties();
+            if (!HasErrors)
+                if (NeedAddYear != null)
+                    if (!GlobalDataHelper.appConfig!.PolicemanYear.Contains(NeedAddYear))
+                        GlobalDataHelper.appConfig!.PolicemanYear.Add(NeedAddYear);
+        }
+
+        [ObservableProperty]
+        private string? needAddCategory;
+
+        [RelayCommand]
+        private void AddCategory()
+        {
+            if (NeedAddCategory != null)
+                if (!GlobalDataHelper.appConfig!.RewardANDPunishCategory.Contains(NeedAddCategory))
+                    GlobalDataHelper.appConfig!.RewardANDPunishCategory.Add(NeedAddCategory);
+        }
+
         [RelayCommand]
         private void SaveImportTemplateFile()
         {

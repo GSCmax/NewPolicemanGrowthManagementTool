@@ -1,24 +1,22 @@
-﻿#region 成长树相关（弃用）
-//using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-//namespace 新警成长管理工具.Model
-//{
-//    internal partial class Branch : ObservableObject
-//    {
-//        [ObservableProperty]
-//        public double x1;
+namespace 新警成长管理工具.Model
+{
+    internal partial class Branch : ObservableObject
+    {
+        [ObservableProperty]
+        public double x1;
 
-//        [ObservableProperty]
-//        public double y1;
+        [ObservableProperty]
+        public double y1;
 
-//        [ObservableProperty]
-//        public double x2;
+        [ObservableProperty]
+        public double x2;
 
-//        [ObservableProperty]
-//        public double y2;
+        [ObservableProperty]
+        public double y2;
 
-//        [ObservableProperty]
-//        public double thickness;
-//    }
-//}
-#endregion
+        [ObservableProperty]
+        public double thickness;
+    }
+}
