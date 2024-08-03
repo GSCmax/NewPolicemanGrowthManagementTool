@@ -12,15 +12,7 @@ namespace 新警成长管理工具.Model
         public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}PolicemanLibrary.json";
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-        public BindingList<SinglePoliceman> PolicemanList { get; set; } = [new SinglePoliceman() {
-            PolicemanReward = {
-                new SingleRewardOrPunish4Policeman() {
-                    RewardOrPunishID = GlobalDataHelper.appConfig!.BePolicemanRewardID,
-                    AddAdmin = "SYSTEM",
-                    AddTime = DateTime.Now
-                }
-            }
-        }];
+        public BindingList<SinglePoliceman> PolicemanList { get; set; } = [new SinglePoliceman()];
 
         [JsonIgnore]
         public BindingList<string> PolicemanMasters { get; set; } = [];

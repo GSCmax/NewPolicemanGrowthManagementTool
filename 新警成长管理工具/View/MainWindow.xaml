@@ -269,6 +269,8 @@
                                 <Style x:Key="TagCustomStyle4" BasedOn="{StaticResource TagBaseStyle}" TargetType="hc:Tag">
                                     <Setter Property="Content" Value="{Binding}"/>
                                     <Setter Property="Margin" Value="5"/>
+                                    <EventSetter Event="Closed" Handler="Tag_Closed"/>
+                                    <Setter Property="ShowCloseButton" Value="{Binding Converter={StaticResource C2BC}}"/>
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>

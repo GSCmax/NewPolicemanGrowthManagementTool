@@ -312,13 +312,6 @@ namespace 新警成长管理工具.VModel
                                         PolicemanSource = (string)reader.GetValue(5),
                                         PolicemanIDNo = reader.GetValue(6).ToString()!,
                                         PolicemanAddr = (string)reader.GetValue(7),
-                                        PolicemanReward = {
-                                            new SingleRewardOrPunish4Policeman() {
-                                                RewardOrPunishID = GlobalDataHelper.appConfig!.BePolicemanRewardID,
-                                                AddAdmin = UserName!,
-                                                AddTime = DateTime.Now
-                                            }
-                                        }
                                     };
                                     if ((string)reader.GetValue(3) == "是")
                                     {

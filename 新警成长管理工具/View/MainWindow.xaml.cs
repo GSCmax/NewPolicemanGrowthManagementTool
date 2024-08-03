@@ -1,4 +1,5 @@
 ﻿using HandyControl.Controls;
+using 新警成长管理工具.Tools;
 using 新警成长管理工具.VModel;
 
 namespace 新警成长管理工具.View
@@ -30,6 +31,17 @@ namespace 新警成长管理工具.View
             bd.Visibility = System.Windows.Visibility.Collapsed;
             ButtonShiftOut.Visibility = System.Windows.Visibility.Visible;
             ButtonShiftIn.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void Tag_Closed(object sender, EventArgs e)
+        {
+            foreach (var item in GlobalDataHelper.rewardANDPunishLibrary!.RewardItems)
+                if (item.RewardANDPunishCategory == (sender as Tag)!.Content.ToString())
+                    item.RewardANDPunishCategory = "基础";
+
+            foreach (var item in GlobalDataHelper.rewardANDPunishLibrary.PunishItems)
+                if (item.RewardANDPunishCategory == (sender as Tag)!.Content.ToString())
+                    item.RewardANDPunishCategory = "基础";
         }
     }
 }

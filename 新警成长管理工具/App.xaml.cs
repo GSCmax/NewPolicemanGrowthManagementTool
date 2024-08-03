@@ -52,4 +52,28 @@ namespace 新警成长管理工具
             throw new NotImplementedException();
         }
     }
+
+    public class Content2BoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch (value)
+            {
+                case "基础":
+                case "德":
+                case "能":
+                case "勤":
+                case "绩":
+                case "廉":
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
