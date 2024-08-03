@@ -93,7 +93,7 @@ namespace 新警成长管理工具.VModel
         }
         #endregion
 
-        #region 新警库
+        #region 警员库
         [ObservableProperty]
         private SinglePoliceman? sp = null;
         partial void OnSpChanged(SinglePoliceman? value)
