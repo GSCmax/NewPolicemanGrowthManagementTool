@@ -16,13 +16,13 @@ namespace 新警成长管理工具.Model
         /// </summary>
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public BindingList<RewardItem> RewardItems { get; set; } = [
-            new RewardItem(){
+            new RewardItem() {
                 RewardANDPunishCategory = GlobalDataHelper.appConfig!.RewardANDPunishCategory.FirstOrDefault(),
                 RewardName = "光荣从警",
                 RewardScore = 50,
                 RewardID = GlobalDataHelper.appConfig!.BePolicemanRewardID
             },
-            new RewardItem(){
+            new RewardItem() {
                 RewardANDPunishCategory = GlobalDataHelper.appConfig!.RewardANDPunishCategory.FirstOrDefault(),
                 RewardName = "中共党员",
                 RewardScore = 30,
