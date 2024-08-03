@@ -31,8 +31,7 @@ namespace 新警成长管理工具
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var temp = GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == ((SingleRewardOrPunish4Policeman)value).RewardOrPunishID);
-            return $"{temp.RewardName} [{temp.RewardANDPunishCategory}] ({temp.RewardScore})";
+            return GlobalDataHelper.rewardANDPunishLibrary!.RewardItems.FirstOrDefault(t => t.RewardID == ((SingleRewardOrPunish4Policeman)value).RewardOrPunishID);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -45,8 +44,7 @@ namespace 新警成长管理工具
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var temp = GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == ((SingleRewardOrPunish4Policeman)value).RewardOrPunishID);
-            return $"{temp.PunishName} [{temp.RewardANDPunishCategory}] (-{temp.PunishScore})";
+            return GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == ((SingleRewardOrPunish4Policeman)value).RewardOrPunishID);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

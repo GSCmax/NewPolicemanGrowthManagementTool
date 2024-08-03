@@ -15,5 +15,7 @@ namespace 新警成长管理工具.Model
 
         [ObservableProperty]
         private string rewardANDPunishCategory = "基础";
+
+        public override string ToString() => $"{RewardName} [{RewardANDPunishCategory}] ({RewardScore})";
     }
 }

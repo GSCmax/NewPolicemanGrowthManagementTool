@@ -46,7 +46,7 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="　警员库　">
+            <TabItem Header="　警员库　" Name="ti2">
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -56,7 +56,7 @@
                     <Button x:Name="ButtonShiftOut" Visibility="Collapsed" Click="ButtonShiftOut_Click" hc:IconElement.Geometry="{StaticResource LeftGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
                     <Button x:Name="ButtonShiftIn" Click="ButtonShiftIn_Click" hc:IconElement.Geometry="{StaticResource RightGeometry}" Padding="8 8 0 8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,-10,0" Style="{StaticResource ButtonIconCircular}" />
                     <DataGrid Grid.Column="0" Margin="0,0,5,0" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanList}" SelectedItem="{Binding Sp}"
-                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="60" SelectedIndex="0"
+                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="{Binding ElementName=ti2, Path=IsSelected}" CanUserDeleteRows="True" RowHeaderWidth="60" SelectedIndex="0"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="姓名*" Width="90" Binding="{Binding PolicemanName}"/>
@@ -102,7 +102,8 @@
                             <Border Grid.Row="1" Margin="5,10,5,5" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush}" Background="White">
                                 <hc:SimplePanel >
                                     <!--#region 雷达图-->
-                                    <lvc:PolarChart Visibility="{Binding ElementName=rb1, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}" Series="{Binding Series}" AngleAxes="{Binding AngleAxes}"/>
+                                    <lvc:PolarChart Visibility="{Binding ElementName=rb1, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}"
+                                                    Margin="0,0,0,30" Series="{Binding Series}" AngleAxes="{Binding AngleAxes}"/>
                                     <!--#endregion-->
                                     <!--#region 成长树-->
                                     <Canvas Visibility="{Binding ElementName=rb2, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}">
@@ -152,7 +153,7 @@
                                 <DockPanel Grid.Row="2" LastChildFill="True" Margin="5,0,5,0">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding RAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}"
-                                              hc:InfoElement.Placeholder="选择奖励项" DisplayMemberPath="RewardName" SelectedItem="{Binding SelectR}"/>
+                                              hc:InfoElement.Placeholder="选择奖励项" SelectedItem="{Binding SelectR}"/>
                                 </DockPanel>
                                 <GridSplitter Grid.Row="3" Margin="5,0" Foreground="{DynamicResource BorderBrush}" Height="2"/>
                                 <TextBlock Grid.Row="4" Text="惩罚" Margin="5,0,0,0"/>
@@ -167,7 +168,7 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="　奖惩库　">
+            <TabItem Header="　奖惩库　" Name="ti3">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -181,7 +182,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="奖励" HorizontalAlignment="Center" Margin="0,10"/>
                     <TextBlock Grid.Column="2" Grid.Row="0" Text="惩罚" HorizontalAlignment="Center" Margin="0,10"/>
                     <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}"
-                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="50"
+                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="{Binding ElementName=ti3, Path=IsSelected}" CanUserDeleteRows="True" RowHeaderWidth="50"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding RDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},Path=SelectedItem}"/>
@@ -193,7 +194,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=PunishItems}"
-                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" RowHeaderWidth="50"
+                              HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="{Binding ElementName=ti3, Path=IsSelected}" CanUserDeleteRows="True" RowHeaderWidth="50"
                               hc:DataGridAttach.ShowRowNumber="True" CanUserResizeColumns="False" CanUserResizeRows="False">
                         <DataGrid.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding PDelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid},Path=SelectedItem}"/>

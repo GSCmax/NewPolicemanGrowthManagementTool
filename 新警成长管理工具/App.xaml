@@ -9,7 +9,6 @@
             <local:RewardID2NameConverter x:Key="RID2NC"/>
             <local:PunishID2NameConverter x:Key="PID2NC"/>
             <!--#endregion-->
-
             <!--#region HandyControl-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
