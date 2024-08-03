@@ -33,14 +33,7 @@
                                 ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanYear}" ItemStringFormat="{}　{0}年新警　" SelectedItem="{Binding SelectedYear}">
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <TextBlock FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Run Text="年度汇总："/><LineBreak/><LineBreak/>
-                                <Run Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Line1, Mode=OneWay}"/><LineBreak/>
-                                <Run Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Line2, Mode=OneWay}"/><LineBreak/>
-                                <Run Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Line3, Mode=OneWay}"/><LineBreak/>
-                                <Run Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Line4, Mode=OneWay}"/><LineBreak/>
-                                <Run Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Line5, Mode=OneWay}"/>
-                                </TextBlock>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.YearStr}" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
@@ -75,7 +68,7 @@
                                         <StackPanel.DataContext>
                                             <vm:MainWindowVM/>
                                         </StackPanel.DataContext>
-                                        <Button Style="{StaticResource ButtonIconCircular.Small}" Margin="0,0,5,0" hc:IconElement.Geometry="{StaticResource RotateRightGeometry}" Command="{Binding UpdatePolicemanMastersCommand}"/>
+                                        <Button Style="{StaticResource ButtonIconCircular.Small}" Margin="0,0,5,0" hc:IconElement.Geometry="{StaticResource RotateRightGeometry}" Command="{Binding UpdatePolicemanMastersCommand}" ToolTip="刷新“师承警师”下拉菜单"/>
                                         <TextBlock Text="师承警师*" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DataGridComboBoxColumn.Header>
