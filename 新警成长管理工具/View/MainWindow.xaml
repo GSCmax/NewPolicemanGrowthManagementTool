@@ -62,17 +62,7 @@
                             <DataGridComboBoxColumn Header="入警途径*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanSource}" SelectedItemBinding="{Binding PolicemanSource}"/>
                             <DataGridTextColumn Header="身份证号*" Width="180" Binding="{Binding PolicemanIDNo}"/>
                             <DataGridCheckBoxColumn Header="警师*" Width="60" Binding="{Binding CanBePolicemanMaster}"/>
-                            <DataGridComboBoxColumn Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}">
-                                <DataGridComboBoxColumn.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel.DataContext>
-                                            <vm:MainWindowVM/>
-                                        </StackPanel.DataContext>
-                                        <Button Style="{StaticResource ButtonIconCircular.Small}" Margin="0,0,5,0" hc:IconElement.Geometry="{StaticResource RotateRightGeometry}" Command="{Binding UpdatePolicemanMastersCommand}" ToolTip="刷新“师承警师”下拉菜单"/>
-                                        <TextBlock Text="师承警师*" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </DataGridComboBoxColumn.Header>
-                            </DataGridComboBoxColumn>
+                            <DataGridComboBoxColumn Header="师承警师*" Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}"/>
                             <DataGridTextColumn Header="住址*" Width="*" Binding="{Binding PolicemanAddr}"/>
                             <DataGridTextColumn Header="积分" Width="90" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
                         </DataGrid.Columns>

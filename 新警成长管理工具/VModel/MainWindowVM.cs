@@ -219,14 +219,6 @@ namespace 新警成长管理工具.VModel
         }
         #endregion
 
-        /// <summary>
-        /// 刷新警师库
-        /// </summary>
-        [RelayCommand]
-        private void UpdatePolicemanMasters()
-        {
-            GlobalDataHelper.UpdatePolicemanMasters();
-        }
         #endregion
 
         #region 设置

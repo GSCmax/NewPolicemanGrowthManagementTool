@@ -11,14 +11,15 @@ namespace 新警成长管理工具.Model
     {
         public SinglePoliceman()
         {
-            PolicemanReward.ListChanged += PolicemanReward_ListChanged;
-            PolicemanPunish.ListChanged += PolicemanPunish_ListChanged;
+            _policemanReward.ListChanged += PolicemanReward_ListChanged;
+            _policemanReward.ListChanged += PolicemanPunish_ListChanged;
         }
 
         /// <summary>
         /// 姓名
         /// </summary>
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PolicemanNameWithNo))]
         [property: JsonProperty]
         private string policemanName = "警员姓名";
 
@@ -47,8 +48,7 @@ namespace 新警成长管理工具.Model
         /// 警号
         /// </summary>
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(PolicemanAge))]
-        [NotifyPropertyChangedFor(nameof(PolicemanSex))]
+        [NotifyPropertyChangedFor(nameof(PolicemanNameWithNo))]
         [RegularExpression("^\\d{6}$")]
         [property: JsonProperty]
         private string policemanNo = "123456";
@@ -56,6 +56,11 @@ namespace 新警成长管理工具.Model
         {
             ValidateAllProperties();
         }
+
+        /// <summary>
+        /// 姓名（警号）（自动）
+        /// </summary>
+        public string PolicemanNameWithNo => $"{PolicemanName}（{PolicemanNo}）";
 
         /// <summary>
         /// 入警时间
@@ -145,6 +150,11 @@ namespace 新警成长管理工具.Model
         [ObservableProperty]
         [property: JsonProperty]
         private bool canBePolicemanMaster = false;
+        partial void OnCanBePolicemanMasterChanged(bool value)
+        {
+            if (!value)
+                ScoreFromApprentice = 0;
+        }
 
         /// <summary>
         /// 师承
@@ -171,7 +181,7 @@ namespace 新警成长管理工具.Model
         }
         private BindingList<SingleRewardOrPunish4Policeman> _policemanReward = [new SingleRewardOrPunish4Policeman() { RewardOrPunishID = GlobalDataHelper.appConfig!.BePolicemanRewardID, AddAdmin = "SYSTEM", AddTime = DateTime.Now }];
 
-        private void PolicemanReward_ListChanged(object sender, ListChangedEventArgs e)
+        private void PolicemanReward_ListChanged(object? sender, ListChangedEventArgs e)
         {
             OnPropertyChanged(nameof(PolicemanScore));
             OnPropertyChanged(nameof(IfCommunist));
@@ -195,7 +205,7 @@ namespace 新警成长管理工具.Model
         }
         private BindingList<SingleRewardOrPunish4Policeman> _policemanPunish = [];
 
-        private void PolicemanPunish_ListChanged(object sender, ListChangedEventArgs e)
+        private void PolicemanPunish_ListChanged(object? sender, ListChangedEventArgs e)
         {
             OnPropertyChanged(nameof(PolicemanScore));
         }
