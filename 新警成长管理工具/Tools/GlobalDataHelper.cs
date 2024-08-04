@@ -103,7 +103,7 @@ namespace 新警成长管理工具.Tools
                 double s = 0;
                 foreach (var pm in policemanLibrary!.PolicemanList.Where(b => b.PolicemanMaster == PolicemanMasterItem))
                     s += pm.PolicemanScore;
-                a.ScoreFromApprentice = s;
+                a.ScoreFromApprentice = s * appConfig!.ScoreComeByApprenticeCoefficient;
             }
 
             //添加警师

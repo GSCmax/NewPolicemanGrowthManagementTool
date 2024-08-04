@@ -11,9 +11,8 @@ namespace 新警成长管理工具.Model
     {
         public SinglePoliceman()
         {
-            PolicemanReward.ListChanged += (s, e) => OnPropertyChanged(nameof(PolicemanScore));
-            PolicemanReward.ListChanged += (s, e) => OnPropertyChanged(nameof(IfCommunist));
-            PolicemanPunish.ListChanged += (s, e) => OnPropertyChanged(nameof(PolicemanScore));
+            PolicemanReward.ListChanged += PolicemanReward_ListChanged;
+            PolicemanPunish.ListChanged += PolicemanPunish_ListChanged;
         }
 
         /// <summary>
@@ -124,7 +123,7 @@ namespace 新警成长管理工具.Model
             foreach (var p in PolicemanPunish)
                 b += GlobalDataHelper.rewardANDPunishLibrary!.PunishItems.FirstOrDefault(t => t.PunishID == p.RewardOrPunishID)!.PunishScore;
             //来自徒弟的积分
-            return a - b + ScoreFromApprentice * GlobalDataHelper.appConfig!.ScoreComeByApprenticeCoefficient;
+            return a - b + ScoreFromApprentice;
         }
 
         /// <summary>
@@ -157,14 +156,49 @@ namespace 新警成长管理工具.Model
         /// <summary>
         /// 奖励列表
         /// </summary>
-        [JsonProperty]
-        public BindingList<SingleRewardOrPunish4Policeman> PolicemanReward { get; set; } = [];
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public BindingList<SingleRewardOrPunish4Policeman> PolicemanReward
+        {
+            get => _policemanReward;
+            set
+            {
+                if (_policemanReward != null)
+                    _policemanReward.ListChanged -= PolicemanReward_ListChanged;
+                _policemanReward = value;
+                if (_policemanReward != null)
+                    _policemanReward.ListChanged += PolicemanReward_ListChanged;
+            }
+        }
+        private BindingList<SingleRewardOrPunish4Policeman> _policemanReward = [new SingleRewardOrPunish4Policeman() { RewardOrPunishID = GlobalDataHelper.appConfig!.BePolicemanRewardID, AddAdmin = "SYSTEM", AddTime = DateTime.Now }];
+
+        private void PolicemanReward_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(PolicemanScore));
+            OnPropertyChanged(nameof(IfCommunist));
+        }
 
         /// <summary>
         /// 惩罚列表
         /// </summary>
-        [JsonProperty]
-        public BindingList<SingleRewardOrPunish4Policeman> PolicemanPunish { get; set; } = [];
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public BindingList<SingleRewardOrPunish4Policeman> PolicemanPunish
+        {
+            get => _policemanPunish;
+            set
+            {
+                if (_policemanPunish != null)
+                    _policemanPunish.ListChanged -= PolicemanPunish_ListChanged;
+                _policemanPunish = value;
+                if (_policemanPunish != null)
+                    _policemanPunish.ListChanged += PolicemanPunish_ListChanged;
+            }
+        }
+        private BindingList<SingleRewardOrPunish4Policeman> _policemanPunish = [];
+
+        private void PolicemanPunish_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(PolicemanScore));
+        }
     }
 
     internal partial class SingleRewardOrPunish4Policeman : ObservableObject
