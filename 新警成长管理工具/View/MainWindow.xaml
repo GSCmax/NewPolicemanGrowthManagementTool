@@ -146,7 +146,7 @@
                                 <DockPanel Grid.Row="2" LastChildFill="True" Margin="5,0,5,0">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding RAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=RewardItems}"
-                                              hc:InfoElement.Placeholder="选择奖励项" SelectedItem="{Binding SelectR}"/>
+                                              hc:InfoElement.Placeholder="选择奖励项" SelectedItem="{Binding SelectR}" DisplayMemberPath="CustomToString"/>
                                 </DockPanel>
                                 <GridSplitter Grid.Row="3" Margin="5,0" Foreground="{DynamicResource BorderBrush}" Height="2"/>
                                 <TextBlock Grid.Row="4" Text="惩罚" Margin="5,0,0,0"/>
@@ -154,7 +154,7 @@
                                 <DockPanel Grid.Row="6" LastChildFill="True" Margin="5,0,5,5">
                                     <Button DockPanel.Dock="Right" Content="添加" Style="{StaticResource ButtonPrimary}" Command="{Binding PAddCommand}"/>
                                     <ComboBox Margin="0,0,5,0" Style="{StaticResource ComboBoxExtend}" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.rewardANDPunishLibrary}, Path=PunishItems}"
-                                              hc:InfoElement.Placeholder="选择惩罚项" DisplayMemberPath="PunishName" SelectedItem="{Binding SelectP}"/>
+                                              hc:InfoElement.Placeholder="选择惩罚项" SelectedItem="{Binding SelectP}" DisplayMemberPath="CustomToString"/>
                                 </DockPanel>
                             </Grid>
                         </Grid>

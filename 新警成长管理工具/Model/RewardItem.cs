@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
 
 namespace 新警成长管理工具.Model
 {
@@ -8,14 +9,18 @@ namespace 新警成长管理工具.Model
         private Guid rewardID = Guid.NewGuid();
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CustomToString))]
         private string rewardName = "新奖励";
 
         [ObservableProperty]
-        private double rewardScore = 1.0;
+        [NotifyPropertyChangedFor(nameof(CustomToString))]
+        private double rewardScore = 10;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CustomToString))]
         private string rewardANDPunishCategory = "基础";
 
-        public override string ToString() => $"{RewardName} [{RewardANDPunishCategory}] ({RewardScore})";
+        [JsonIgnore]
+        public string CustomToString => $"{RewardName} [{RewardANDPunishCategory}] ({RewardScore})";
     }
 }
