@@ -157,11 +157,25 @@ namespace 新警成长管理工具.Model
         }
 
         /// <summary>
-        /// 师承
+        /// 师承（所队干部）
         /// </summary>
         [ObservableProperty]
         [property: JsonProperty]
-        private string policemanMaster = "";
+        private string policemanMaster_A = "";
+
+        /// <summary>
+        /// 师承（业务骨干）
+        /// </summary>
+        [ObservableProperty]
+        [property: JsonProperty]
+        private string policemanMaster_B = "";
+
+        /// <summary>
+        /// 任职单位
+        /// </summary>
+        [ObservableProperty]
+        [property: JsonProperty]
+        private string policemanWorkUnit = "警员单位";
 
         /// <summary>
         /// 奖励列表

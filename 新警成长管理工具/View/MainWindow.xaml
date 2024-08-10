@@ -62,7 +62,9 @@
                             <DataGridComboBoxColumn Header="入警途径*" Width="90" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PolicemanSource}" SelectedItemBinding="{Binding PolicemanSource}"/>
                             <DataGridTextColumn Header="身份证号*" Width="180" Binding="{Binding PolicemanIDNo}"/>
                             <DataGridCheckBoxColumn Header="警师*" Width="60" Binding="{Binding CanBePolicemanMaster}"/>
-                            <DataGridComboBoxColumn Header="师承警师*" Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster}"/>
+                            <DataGridComboBoxColumn Header="师承（所队干部）*" Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster_A}"/>
+                            <DataGridComboBoxColumn Header="师承（业务骨干）*" Width="150" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanMasters}" SelectedItemBinding="{Binding PolicemanMaster_B}"/>
+                            <DataGridTextColumn Header="任职单位*" Width="*" Binding="{Binding PolicemanWorkUnit}"/>
                             <DataGridTextColumn Header="住址*" Width="*" Binding="{Binding PolicemanAddr}"/>
                             <DataGridTextColumn Header="积分" Width="90" Binding="{Binding PolicemanScore}" IsReadOnly="True"/>
                         </DataGrid.Columns>

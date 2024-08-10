@@ -52,7 +52,7 @@ namespace 新警成长管理工具.Model
 
                 //计算得分
                 double s = 0;
-                foreach (var pm in PolicemanList.Where(b => b.PolicemanMaster == PolicemanMasterItem))
+                foreach (var pm in PolicemanList.Where(b => (b.PolicemanMaster_A == PolicemanMasterItem || b.PolicemanMaster_B == PolicemanMasterItem)))
                     s += pm.PolicemanScore;
                 a.ScoreFromApprentice = s * GlobalDataHelper.appConfig!.ScoreComeByApprenticeCoefficient;
             }
