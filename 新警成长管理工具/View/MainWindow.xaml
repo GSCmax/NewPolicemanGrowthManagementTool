@@ -51,6 +51,11 @@
                     <DataGrid Grid.Column="0" Margin="0,0,5,0" ItemsSource="{Binding Source={x:Static tools:GlobalDataHelper.policemanLibrary}, Path=PolicemanList}" SelectedItem="{Binding Sp}"
                               HeadersVisibility="All" AutoGenerateColumns="False" CanUserAddRows="{Binding ElementName=ti2, Path=IsSelected}" CanUserDeleteRows="True" RowHeaderWidth="60" SelectedIndex="0"
                               hc:DataGridAttach.ShowRowNumber="True" hc:DataGridAttach.ShowSelectAllButton="False" CanUserResizeColumns="False" CanUserResizeRows="False" SelectionMode="Single">
+                        <DataGrid.InputBindings>
+                            <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding PasteRorPCommand}"/>
+                            <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding CopyRCommand}"/>
+                            <KeyBinding Key="C" Modifiers="Ctrl + Shift" Command="{Binding CopyPCommand}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="姓名*" Width="90" Binding="{Binding PolicemanName}"/>
                             <DataGridTextColumn Header="性别" Width="60" Binding="{Binding PolicemanSex}" IsReadOnly="True"/>

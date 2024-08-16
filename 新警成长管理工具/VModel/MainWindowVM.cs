@@ -180,6 +180,73 @@ namespace 新警成长管理工具.VModel
             }
         }
 
+        List<Guid> CopyTemp = [];
+        bool CopyReward = true;
+
+        [RelayCommand]
+        private void CopyR()
+        {
+            if (Sp != null)
+            {
+                CopyReward = true;
+                CopyTemp.Clear();
+                foreach (var r in Sp.PolicemanReward)
+                    CopyTemp.Add(r.RewardOrPunishID);
+            }
+        }
+
+        [RelayCommand]
+        private void CopyP()
+        {
+            if (Sp != null)
+            {
+                CopyReward = false;
+                CopyTemp.Clear();
+                foreach (var r in Sp.PolicemanPunish)
+                    CopyTemp.Add(r.RewardOrPunishID);
+            }
+        }
+
+        [RelayCommand]
+        private void PasteRorP()
+        {
+            if (Sp != null)
+            {
+                if (CopyReward)
+                {
+                    foreach (var g in CopyTemp)
+                    {
+                        var temp = Sp.PolicemanReward.FirstOrDefault(t => t.RewardOrPunishID == g);
+                        if (temp == null)
+                        {
+                            Sp.PolicemanReward.Add(new SingleRewardOrPunish4Policeman()
+                            {
+                                RewardOrPunishID = g,
+                                AddAdmin = UserName!,
+                                AddTime = DateTime.Now,
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var g in CopyTemp)
+                    {
+                        var temp = Sp.PolicemanPunish.FirstOrDefault(t => t.RewardOrPunishID == g);
+                        if (temp == null)
+                        {
+                            Sp.PolicemanPunish.Add(new SingleRewardOrPunish4Policeman()
+                            {
+                                RewardOrPunishID = g,
+                                AddAdmin = UserName!,
+                                AddTime = DateTime.Now,
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
         #region 雷达图相关
         /// <summary>
         /// 项目数据
