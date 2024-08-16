@@ -12,7 +12,7 @@ namespace 新警成长管理工具.Model
         public SinglePoliceman()
         {
             _policemanReward.ListChanged += PolicemanReward_ListChanged;
-            _policemanReward.ListChanged += PolicemanPunish_ListChanged;
+            _policemanPunish.ListChanged += PolicemanPunish_ListChanged;
         }
 
         /// <summary>
